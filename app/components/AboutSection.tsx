@@ -68,7 +68,7 @@ export default function AboutSection() {
             className="space-y-6 text-white/40 text-lg md:text-xl leading-relaxed tracking-wide"
           >
             <p>
-              I'm a product design practitioner studying Electronics &
+              I&apos;m a product design practitioner studying Electronics &
               Communication Engineering at GEC Palakkad. My work sits at the
               intersection of engineering logic and human empathy.
             </p>
@@ -76,7 +76,7 @@ export default function AboutSection() {
             <p>
               I believe the best interfaces are invisible — they solve
               problems so intuitively that users never notice the design.
-              I'm obsessed with the moment when complexity becomes clarity.
+              I&apos;m obsessed with the moment when complexity becomes clarity.
             </p>
 
             <p>
