@@ -1,41 +1,34 @@
-# Avanthika K S — Portfolio
+# Avanthika K S - Portfolio
 
-Built from the Figma design with Next.js 14, TypeScript, Tailwind CSS, and Framer Motion.
+This is my personal portfolio website. I built it to present my work, design process, and the way I use AI in my creative workflow.
 
-## Run locally
+The site is based on my Figma design and developed with Next.js, TypeScript, Tailwind CSS, and Framer Motion.
 
-```bash
-npm install
-npm run dev
-```
+## What It Includes
 
-Open http://localhost:3000
+- A homepage with sections for introduction, about me, process, selected work, AI in my process, and contact
+- Smooth scrolling navigation between sections
+- Scroll-based animations for a more interactive experience
+- A dark visual style with yellow accent highlights
 
-## Build for production
+## Project Structure
 
-```bash
-npm run build
-npm run start
-```
-
-## Deploy
-
-This is a standard Next.js 14 app, so it deploys to Vercel, Netlify, or any Node host with zero config:
-
-```bash
-npx vercel
-```
-
-(Push to GitHub and import into Vercel for the simplest path — this sandbox's network is restricted to package registries, so the live deploy step needs to happen from your own machine or a connected Vercel account.)
-
-## Structure
-
-- `app/page.tsx` — assembles all sections
-- `app/components/` — Header, HeroSection, AboutSection, ProcessSection, WorkSection, AISection, ContactSection
-- `app/globals.css` — Inter font import, dark theme base styles
+- `app/page.tsx` - main portfolio page that brings all sections together
+- `app/layout.tsx` - root layout and page metadata
+- `app/globals.css` - global styles, Tailwind setup, and theme styling
+- `app/types.ts` - shared TypeScript types
+- `app/components/Header.tsx` - navigation header
+- `app/components/HeroSection.tsx` - opening introduction section
+- `app/components/AboutSection.tsx` - about me section
+- `app/components/ProcessSection.tsx` - design process section
+- `app/components/WorkSection.tsx` - selected work section
+- `app/components/AISection.tsx` - AI in my process section
+- `app/components/ContactSection.tsx` - contact section
+- `app/fonts/` - local font files
+- `app/Image.png` and `app/Initial logo.png` - image assets used in the site
+- `tailwind.config.ts` - Tailwind CSS configuration
+- `next.config.mjs` - Next.js configuration
 
 ## Notes
 
-- The About Me portrait and Work card thumbnails use placeholder graphics (the original Figma image assets are stored on Figma's temporary CDN and weren't reachable from the build sandbox). Swap in real images by replacing the placeholder `<div>`/`<svg>` blocks in `AboutSection.tsx` and `WorkSection.tsx` with your own `<img>` or `next/image` tags.
-- Color palette: black `#000`, accent yellow `#facc15`, white/translucent text per the design.
-- All sections are scroll-triggered with Framer Motion (`useInView`) and the header/nav smooth-scrolls to each section by id (`about-me`, `process`, `work`, `ai-in-my-process`, `contact`).
+Some images are placeholders for now and can be replaced with final portfolio visuals later.
