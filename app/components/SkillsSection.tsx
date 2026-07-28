@@ -18,10 +18,6 @@ const SKILL_GROUPS = [
     skills: ["Firebase", "Supabase", "Firestore", "SQL"]
   },
   {
-    category: "EMBEDDED SYSTEMS (ECE)",
-    skills: ["Arduino IDE", "Microcontrollers (ATmega)", "IoT Prototyping", "Sensors Interfacing", "Hardware Prototyping"]
-  },
-  {
     category: "DESIGN & TOOLS",
     skills: ["Figma", "Git", "GitHub", "VS Code", "Linux"]
   }
@@ -31,6 +27,7 @@ export default function SkillsSection() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
   const [isDark, setIsDark] = useState(false);
+  const [forceVisible, setForceVisible] = useState(false);
 
   useEffect(() => {
     setIsDark(document.documentElement.classList.contains("dark"));
@@ -47,14 +44,35 @@ export default function SkillsSection() {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    if (inView) {
+      setForceVisible(false);
+      return;
+    }
+
+    // Fail-safe: if IntersectionObserver misses, reveal content after mount.
+    const timeoutId = window.setTimeout(() => {
+      setForceVisible(true);
+    }, 1200);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [inView]);
+
+  const shouldReveal = inView || forceVisible;
+
   return (
-    <section id="skills" className="relative bg-white dark:bg-black pt-4 pb-16 overflow-hidden border-t border-zinc-100 dark:border-zinc-900 transition-colors">
+    <section
+      id="skills"
+      ref={ref}
+      className={`relative bg-white dark:bg-black pt-4 pb-16 overflow-hidden border-t border-zinc-100 dark:border-zinc-900 transition-colors ${forceVisible && !inView ? "skills-fallback-visible" : ""}`}
+    >
       <div className="max-w-[1440px] mx-auto px-6 sm:px-12 md:px-24">
         
         {/* Section tag header */}
         <motion.div
           initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
+          animate={shouldReveal ? { opacity: 1 } : {}}
+          data-skill-reveal
           className="flex items-center gap-2 mb-12 text-left"
         >
           <span className="w-6 h-px bg-zinc-400 dark:bg-zinc-650" />
@@ -64,8 +82,9 @@ export default function SkillsSection() {
         {/* Section title */}
         <motion.h2
           initial={{ opacity: 0, y: 15 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
+          animate={shouldReveal ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
+          data-skill-reveal
           className="font-bold text-black dark:text-white text-2xl sm:text-3xl md:text-4xl tracking-tight mb-16 text-left leading-tight"
         >
           Skills & Open Source.
@@ -80,11 +99,12 @@ export default function SkillsSection() {
               <motion.div
                 key={group.category}
                 initial={{ opacity: 0, y: 15 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
+                animate={shouldReveal ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: idx * 0.08 }}
-                className="border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 rounded-2xl p-5 shadow-sm animate-none"
+                data-skill-reveal
+                className="border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 rounded-2xl p-5 shadow-sm"
               >
-                <h3 className="text-zinc-500 dark:text-zinc-450 font-bold text-xs uppercase tracking-wider mb-4">
+                <h3 className="text-zinc-500 dark:text-zinc-400 font-bold text-xs uppercase tracking-wider mb-4">
                   {group.category}
                 </h3>
                 
@@ -111,7 +131,8 @@ export default function SkillsSection() {
               target="_blank"
               rel="noopener noreferrer"
               initial={{ opacity: 0 }}
-              animate={inView ? { opacity: 1 } : {}}
+              animate={shouldReveal ? { opacity: 1 } : {}}
+              data-skill-reveal
               className="border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 hover:border-black dark:hover:border-white hover:shadow-sm rounded-2xl p-5 flex items-center justify-between shadow-sm cursor-pointer block transition-all"
             >
               <div className="flex items-center gap-3">
@@ -127,8 +148,9 @@ export default function SkillsSection() {
             {/* Prominent Contribution Streak Widget */}
             <motion.div
               initial={{ opacity: 0, y: 15 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
+              animate={shouldReveal ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.1 }}
+              data-skill-reveal
               className="border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 rounded-2xl p-6 shadow-sm flex flex-col items-center justify-center"
             >
               <h4 className="text-zinc-500 dark:text-zinc-400 font-bold text-xs uppercase tracking-wider mb-4 self-start">Contribution Streak</h4>
@@ -145,8 +167,9 @@ export default function SkillsSection() {
               {/* General Stats */}
               <motion.div
                 initial={{ opacity: 0, y: 15 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
+                animate={shouldReveal ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: 0.2 }}
+                data-skill-reveal
                 className="border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 rounded-2xl p-5 flex flex-col items-center justify-center shadow-sm"
               >
                 <h4 className="text-zinc-500 dark:text-zinc-400 font-bold text-xs uppercase tracking-wider mb-4 self-start">General Stats</h4>
@@ -161,8 +184,9 @@ export default function SkillsSection() {
               {/* Languages */}
               <motion.div
                 initial={{ opacity: 0, y: 15 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
+                animate={shouldReveal ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: 0.3 }}
+                data-skill-reveal
                 className="border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 rounded-2xl p-5 flex flex-col items-center justify-center shadow-sm"
               >
                 <h4 className="text-zinc-500 dark:text-zinc-400 font-bold text-xs uppercase tracking-wider mb-4 self-start">Languages</h4>
