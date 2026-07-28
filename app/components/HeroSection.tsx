@@ -1,6 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
-import { ArrowRight, FileText, MapPin } from "lucide-react";
+import { ArrowRight, BadgeCheck, Code2, Coffee, FileText, Github, GraduationCap, Linkedin, MapPin, Wrench } from "lucide-react";
 import Image from "next/image";
 import profileImage from "../Image.png";
 import { PORTFOLIO_DATA } from "../data/portfolioData";
@@ -23,45 +23,38 @@ const item = {
 const SOCIAL_LINKS = [
   {
     href: "https://github.com/AVA-NTHIKA14",
-    icon: "https://skillicons.dev/icons?i=github",
+    icon: Github,
     alt: "GitHub",
-    invertDark: false
   },
   {
     href: "https://linkedin.com/in/avanthika-ks",
-    icon: "https://skillicons.dev/icons?i=linkedin",
+    icon: Linkedin,
     alt: "LinkedIn",
-    invertDark: false
   },
   {
     href: "https://app.mulearn.org/profile/avanthikaks@mulearn",
-    icon: "https://app.mulearn.org/favicon.ico",
+    icon: GraduationCap,
     alt: "μLearn",
-    invertDark: false
   },
   {
     href: "https://tinkerhub.org/@avanthika",
-    icon: "https://tinkerhub.org/favicon.ico",
+    icon: Wrench,
     alt: "TinkerHub",
-    invertDark: false
   },
   {
     href: "https://fossunited.org/u/avanthika_k_s",
-    icon: "https://raw.githubusercontent.com/fossunited/Branding/main/asset/FOSS%20United%20Logo/FOSS%20United%20Logo%20Black.png",
+    icon: Code2,
     alt: "FOSS United",
-    invertDark: true // Inverts black logo in dark mode
   },
   {
     href: "https://g.dev/avanthikaks",
-    icon: "https://www.gstatic.com/_/boq-gdp/_/r/tAMXOM5mAsI.svg",
+    icon: BadgeCheck,
     alt: "Google Developer Program",
-    invertDark: false
   },
   {
     href: "https://buymeacoffee.com/avanthika.k.s",
-    icon: "https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg",
+    icon: Coffee,
     alt: "Buy Me a Coffee",
-    invertDark: false
   }
 ];
 
@@ -153,23 +146,23 @@ export default function HeroSection() {
 
           {/* Social links underneath */}
           <motion.div variants={item} className="flex flex-wrap gap-4 items-center">
-            {SOCIAL_LINKS.map((link) => (
-              <a
-                key={link.alt}
-                href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:scale-105 transition-transform duration-250 flex items-center justify-center"
-                title={link.alt}
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={link.icon}
-                  alt={link.alt}
-                  className={`h-7 w-auto object-contain ${link.invertDark ? "dark:invert dark:brightness-200" : ""}`}
-                />
-              </a>
-            ))}
+            {SOCIAL_LINKS.map((link) => {
+              const Icon = link.icon;
+
+              return (
+                <a
+                  key={link.alt}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex h-7 w-7 items-center justify-center text-zinc-600 transition-all duration-250 hover:scale-105 hover:text-black dark:text-zinc-400 dark:hover:text-white"
+                  title={link.alt}
+                  aria-label={link.alt}
+                >
+                  <Icon size={21} strokeWidth={1.75} aria-hidden="true" />
+                </a>
+              );
+            })}
           </motion.div>
         </motion.div>
 
@@ -185,7 +178,7 @@ export default function HeroSection() {
               src={profileImage}
               alt="Avanthika K S"
               priority
-              className="w-full h-full object-cover bg-white transition-all duration-500 grayscale group-hover:grayscale-0 group-hover:scale-105"
+              className="w-full h-full object-cover bg-white scale-[1.35] transition-all duration-500 grayscale group-hover:grayscale-0 group-hover:scale-[1.4]"
             />
           </div>
 
