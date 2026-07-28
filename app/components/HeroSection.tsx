@@ -1,6 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
-import { ArrowRight, BadgeCheck, Code2, Coffee, FileText, Github, GraduationCap, Linkedin, MapPin, Wrench } from "lucide-react";
+import { Github, Linkedin, GraduationCap, Wrench, Code2, BadgeCheck, Coffee } from "lucide-react";
 import Image from "next/image";
 import profileImage from "../Image.png";
 import { PORTFOLIO_DATA } from "../data/portfolioData";
@@ -23,39 +23,39 @@ const item = {
 const SOCIAL_LINKS = [
   {
     href: "https://github.com/AVA-NTHIKA14",
-    icon: Github,
+    image: "https://skillicons.dev/icons?i=github",
     alt: "GitHub",
   },
   {
     href: "https://linkedin.com/in/avanthika-ks",
-    icon: Linkedin,
+    image: "https://skillicons.dev/icons?i=linkedin",
     alt: "LinkedIn",
   },
   {
     href: "https://app.mulearn.org/profile/avanthikaks@mulearn",
-    icon: GraduationCap,
+    image: "https://app.mulearn.org/favicon.ico",
     alt: "μLearn",
   },
   {
     href: "https://tinkerhub.org/@avanthika",
-    icon: Wrench,
+    image: "https://tinkerhub.org/favicon.ico",
     alt: "TinkerHub",
   },
   {
     href: "https://fossunited.org/u/avanthika_k_s",
-    icon: Code2,
+    image: "https://fossunited.org/favicon.ico",
     alt: "FOSS United",
   },
   {
     href: "https://g.dev/avanthikaks",
-    icon: BadgeCheck,
+    image: "/google-developers.svg", // download or create this locally
     alt: "Google Developer Program",
   },
   {
     href: "https://buymeacoffee.com/avanthika.k.s",
-    icon: Coffee,
+    image: "https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg",
     alt: "Buy Me a Coffee",
-  }
+  },
 ];
 
 export default function HeroSection() {
