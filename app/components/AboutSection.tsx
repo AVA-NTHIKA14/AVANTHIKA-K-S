@@ -35,8 +35,7 @@ export default function AboutSection() {
               initial={{ opacity: 0, y: 15 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.7 }}
-              className="text-black dark:text-zinc-200 font-normal text-2xl sm:text-3xl leading-[1.3] mb-8 tracking-tight text-left"
-              style={{ fontSize: "clamp(22px, 3.2vw, 38px)" }}
+              className="text-black dark:text-zinc-200 font-normal text-lg sm:text-xl md:text-2xl leading-[1.6] mb-8 tracking-normal text-left"
             >
               I&apos;m a product design practitioner studying Electronics & Communication Engineering at GEC Palakkad. My work sits at the intersection of engineering logic and human empathy.
               <br />
