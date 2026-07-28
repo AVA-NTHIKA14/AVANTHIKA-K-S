@@ -180,12 +180,12 @@ export default function HeroSection() {
           transition={{ duration: 0.5 }}
           className="lg:col-span-5 flex flex-col justify-center items-center relative"
         >
-          <div className="relative w-full max-w-[400px] aspect-[3445/4205] rounded-[32px] overflow-hidden border border-zinc-150 dark:border-zinc-850 bg-transparent group hover:bg-yellow-400 dark:hover:bg-yellow-400 hover:border-yellow-400 dark:hover:border-yellow-400 transition-all duration-500 shadow-lg">
+          <div className="relative w-full max-w-[300px] aspect-[3445/4205] rounded-[32px] overflow-hidden border-2 border-zinc-150 dark:border-zinc-850 bg-white group hover:border-yellow-400 dark:hover:border-yellow-400 transition-all duration-500 shadow-lg">
             <Image
               src={profileImage}
               alt="Avanthika K S"
               priority
-              className="w-full h-full object-cover transition-all duration-500 grayscale group-hover:grayscale-0 group-hover:scale-105"
+              className="w-full h-full object-cover bg-white transition-all duration-500 grayscale group-hover:grayscale-0 group-hover:scale-105"
             />
           </div>
 
