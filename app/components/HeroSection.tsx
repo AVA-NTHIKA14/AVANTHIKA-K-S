@@ -1,126 +1,216 @@
 "use client";
-import { motion, type Variants } from "framer-motion";
+import { motion } from "framer-motion";
+import { ArrowRight, FileText, MapPin } from "lucide-react";
+import Image from "next/image";
+import profileImage from "../Image.png";
+import { PORTFOLIO_DATA } from "../data/portfolioData";
 
-const container: Variants = {
-  hidden: {},
-  show: {
-    transition: { staggerChildren: 0.12 },
-  },
-};
-const item: Variants = {
-  hidden: { opacity: 0, y: 40 },
+const container = {
+  hidden: { opacity: 0 },
   show: {
     opacity: 1,
-    y: 0,
-    transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] },
+    transition: {
+      staggerChildren: 0.08,
+    },
   },
 };
+
+const item = {
+  hidden: { opacity: 0, y: 12 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+};
+
+const SOCIAL_LINKS = [
+  {
+    href: "https://github.com/AVA-NTHIKA14",
+    icon: "https://skillicons.dev/icons?i=github",
+    alt: "GitHub",
+    invertDark: false
+  },
+  {
+    href: "https://linkedin.com/in/avanthika-ks",
+    icon: "https://skillicons.dev/icons?i=linkedin",
+    alt: "LinkedIn",
+    invertDark: false
+  },
+  {
+    href: "https://app.mulearn.org/profile/avanthikaks@mulearn",
+    icon: "https://app.mulearn.org/favicon.ico",
+    alt: "μLearn",
+    invertDark: false
+  },
+  {
+    href: "https://tinkerhub.org/@avanthika",
+    icon: "https://tinkerhub.org/favicon.ico",
+    alt: "TinkerHub",
+    invertDark: false
+  },
+  {
+    href: "https://fossunited.org/u/avanthika_k_s",
+    icon: "https://raw.githubusercontent.com/fossunited/Branding/main/asset/FOSS%20United%20Logo/FOSS%20United%20Logo%20Black.png",
+    alt: "FOSS United",
+    invertDark: true // Inverts black logo in dark mode
+  },
+  {
+    href: "https://g.dev/avanthikaks",
+    icon: "https://www.gstatic.com/_/boq-gdp/_/r/tAMXOM5mAsI.svg",
+    alt: "Google Developer Program",
+    invertDark: false
+  },
+  {
+    href: "https://buymeacoffee.com/avanthika.k.s",
+    icon: "https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg",
+    alt: "Buy Me a Coffee",
+    invertDark: false
+  }
+];
 
 export default function HeroSection() {
   return (
     <section
       id="home"
-      className="relative min-h-screen bg-black flex flex-col justify-center overflow-hidden pt-[98px]"
+      className="relative min-h-[90vh] bg-white dark:bg-black overflow-hidden flex items-center pt-24 pb-12 transition-colors duration-300"
     >
       {/* Subtle grid background */}
       <div
-        className="absolute inset-0 pointer-events-none opacity-5"
+        className="absolute inset-0 pointer-events-none opacity-[0.03] dark:opacity-[0.015]"
         style={{
           backgroundImage:
-            "linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)",
-          backgroundSize: "80px 80px",
+            "linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)",
+          backgroundSize: "60px 60px",
         }}
       />
 
-      {/* Glow orbs */}
-      <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-[#facc15]/5 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-[#facc15]/3 rounded-full blur-[100px] pointer-events-none" />
-
-      <motion.div
-        variants={container}
-        initial="hidden"
-        animate="show"
-        className="relative z-10 px-6 sm:px-10 md:px-[90px] max-w-[1440px] mx-auto w-full"
-      >
-        {/* Role badge */}
-        <motion.p
-          variants={item}
-          className="text-[rgba(255,255,255,0.49)] text-xs font-extrabold tracking-[2px] mb-4"
-        >
-          . Product Designer . Final Year Btech Student . Builder
-        </motion.p>
-
-        {/* Name */}
-        <motion.div variants={item} className="mb-6">
-          <p className="text-white text-[rgba(255,255,255,0.49)] font-extrabold text-xs mb-1">
-            Hi
-          </p>
-          <h2 className="text-white font-extrabold text-[32px]">
-            I&apos;m{" "}
-            <span className="text-[#facc15]">AVANTHIKA K S</span>
-          </h2>
-        </motion.div>
-
-        {/* Main headline */}
-        <motion.div variants={item} className="mb-8">
-          <h1 className="font-extrabold text-white leading-[1.05]" style={{ fontSize: "clamp(48px, 6.25vw, 90px)" }}>
-            I design experiences
-            <br />
-            that make{" "}
-            <span className="text-[#facc15]">complex things</span>
-            <br />
-            <span className="pl-0 sm:pl-[6vw]">feel </span>
-            <span className="text-[#facc15]">obvious.</span>
-          </h1>
-        </motion.div>
-
-        {/* Subtitle */}
-        <motion.p
-          variants={item}
-          className="text-[rgba(255,255,255,0.64)] font-extralight text-[23px] tracking-[2px] mb-16"
-        >
-          Between System thinking &nbsp; with Human-centered Design
-        </motion.p>
-
-        {/* CTA Buttons */}
-        <motion.div variants={item} className="flex flex-wrap gap-4 sm:gap-6">
-          <motion.button
-            whileHover={{ scale: 1.04 }}
-            whileTap={{ scale: 0.97 }}
-            className="bg-[#facc15] text-black font-extrabold text-lg sm:text-2xl md:text-[28px] px-8 sm:px-10 md:px-14 py-4 sm:py-5 md:py-6 rounded-[56px] cursor-pointer border-none"
-            onClick={() =>
-              document.getElementById("work")?.scrollIntoView({ behavior: "smooth" })
-            }
-          >
-            See Works
-          </motion.button>
-          <motion.button
-            whileHover={{ scale: 1.04 }}
-            whileTap={{ scale: 0.97 }}
-            className="bg-black text-white font-extrabold text-lg sm:text-2xl md:text-[28px] px-8 sm:px-10 md:px-14 py-4 sm:py-5 md:py-6 rounded-[56px] border border-white cursor-pointer"
-            onClick={() =>
-              document.getElementById("about-me")?.scrollIntoView({ behavior: "smooth" })
-            }
-          >
-            About Me
-          </motion.button>
-        </motion.div>
-      </motion.div>
-
-      {/* Scroll indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5, duration: 0.8 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-      >
-        <span className="text-white/30 text-xs tracking-[3px] uppercase">Scroll</span>
+      <div className="relative z-10 px-6 sm:px-12 md:px-24 max-w-[1440px] mx-auto w-full grid lg:grid-cols-12 gap-12 items-center">
+        {/* Left Content */}
         <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ repeat: Infinity, duration: 1.5 }}
-          className="w-px h-10 bg-gradient-to-b from-white/30 to-transparent"
-        />
-      </motion.div>
+          variants={container}
+          initial="hidden"
+          animate="show"
+          className="lg:col-span-7 flex flex-col justify-center text-left"
+        >
+          {/* Opportunities badge */}
+          <motion.div variants={item} className="mb-6 flex items-center">
+            <span className="inline-flex items-center gap-1.5 text-xs text-zinc-600 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-800 bg-zinc-50/80 dark:bg-zinc-900/60 px-4 py-1.5 rounded-full font-semibold">
+              <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+              Available for new opportunities
+            </span>
+          </motion.div>
+
+          {/* Main headline */}
+          <motion.h1
+            variants={item}
+            className="font-bold text-black dark:text-white leading-[1.1] mb-4 tracking-tight"
+            style={{ fontSize: "clamp(38px, 5.5vw, 68px)" }}
+          >
+            Hi, I&apos;m AVANTHIKA K S.
+          </motion.h1>
+
+          {/* Tagline */}
+          <motion.h2
+            variants={item}
+            className="font-light text-zinc-600 dark:text-zinc-300 leading-[1.3] mb-6 tracking-tight max-w-[620px]"
+            style={{ fontSize: "clamp(24px, 3.2vw, 42px)" }}
+          >
+            Design experiences that make complex things feel obvious.
+          </motion.h2>
+
+          {/* Subtitle */}
+          <motion.p
+            variants={item}
+            className="text-zinc-500 dark:text-zinc-400 font-normal text-base sm:text-lg tracking-wide max-w-[580px] mb-10 leading-relaxed"
+          >
+            {PORTFOLIO_DATA.subHeadline}
+          </motion.p>
+
+          {/* CTA Buttons */}
+          <motion.div
+            variants={item}
+            className="flex flex-wrap gap-4 sm:gap-6 mb-12"
+          >
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className="bg-black dark:bg-white text-white dark:text-black hover:bg-zinc-900 dark:hover:bg-zinc-100 font-bold text-xs tracking-wider uppercase px-7 py-4 rounded-full cursor-pointer border-none flex items-center gap-1.5 shadow-sm"
+              onClick={() =>
+                document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })
+              }
+            >
+              View Projects <ArrowRight size={14} />
+            </motion.button>
+
+            <motion.a
+              href={PORTFOLIO_DATA.contact.resumeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className="bg-white dark:bg-black hover:bg-zinc-50 dark:hover:bg-zinc-900/50 text-black dark:text-white font-bold text-xs tracking-wider uppercase px-7 py-4 rounded-full border border-zinc-200 dark:border-zinc-800 shadow-sm flex items-center gap-1.5 cursor-pointer"
+            >
+              <FileText size={14} /> View Resume
+            </motion.a>
+          </motion.div>
+
+          {/* Social links underneath */}
+          <motion.div variants={item} className="flex flex-wrap gap-4 items-center">
+            {SOCIAL_LINKS.map((link) => (
+              <a
+                key={link.alt}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:scale-105 transition-transform duration-250 flex items-center justify-center"
+                title={link.alt}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={link.icon}
+                  alt={link.alt}
+                  className={`h-7 w-auto object-contain ${link.invertDark ? "dark:invert dark:brightness-200" : ""}`}
+                />
+              </a>
+            ))}
+          </motion.div>
+        </motion.div>
+
+        {/* Right Photograph */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.97 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+          className="lg:col-span-5 flex flex-col justify-center items-center relative"
+        >
+          <div className="relative w-full max-w-[400px] aspect-[3445/4205] rounded-[32px] overflow-hidden border border-zinc-150 dark:border-zinc-850 bg-transparent group hover:bg-yellow-400 dark:hover:bg-yellow-400 hover:border-yellow-400 dark:hover:border-yellow-400 transition-all duration-500 shadow-lg">
+            <Image
+              src={profileImage}
+              alt="Avanthika K S"
+              priority
+              className="w-full h-full object-cover transition-all duration-500 grayscale group-hover:grayscale-0 group-hover:scale-105"
+            />
+          </div>
+
+          {/* Floating locator badge card at bottom */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+            className="absolute bottom-[-15px] left-1/2 -translate-x-1/2 sm:left-4 sm:translate-x-0 bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-2xl px-5 py-3 shadow-md flex items-center gap-3 w-fit cursor-pointer hover:border-zinc-300 dark:hover:border-zinc-700 transition-colors"
+            onClick={() =>
+              document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })
+            }
+          >
+            <div className="w-8 h-8 rounded-full bg-zinc-100 dark:bg-zinc-900 flex items-center justify-center text-black dark:text-white">
+              <MapPin size={16} />
+            </div>
+            <div className="flex flex-col text-left">
+              <span className="text-xs text-zinc-500 dark:text-zinc-400 uppercase tracking-widest leading-none font-bold">Product Designer</span>
+              <span className="text-xs text-black dark:text-white font-bold mt-1.5 flex items-center gap-1">
+                Kozhikode, Kerala, India <ArrowRight size={12} className="text-zinc-400 dark:text-zinc-500" />
+              </span>
+            </div>
+          </motion.div>
+        </motion.div>
+      </div>
     </section>
   );
 }
