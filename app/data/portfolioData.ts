@@ -433,7 +433,7 @@ export const PORTFOLIO_DATA: {
       id: 1,
       role: "District Lead",
       company: "MuLearn Foundation",
-      period: "Nov 2025 — Jan 2026",
+      period: "Nov 2024 — Jan 2026",
       description: [
         "Represented μLearn at the district level, coordinating local initiatives and community outreach programs in Palakkad.",
         "Engaged in Campus Management works.",
