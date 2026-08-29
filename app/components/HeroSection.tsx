@@ -1,6 +1,7 @@
 "use client";
+
 import { motion } from "framer-motion";
-import { Github, Linkedin, GraduationCap, Wrench, Code2, BadgeCheck, Coffee } from "lucide-react";
+import { ArrowRight, FileText, MapPin } from "lucide-react";
 import Image from "next/image";
 import profileImage from "../Image.png";
 import { PORTFOLIO_DATA } from "../data/portfolioData";
@@ -17,7 +18,11 @@ const container = {
 
 const item = {
   hidden: { opacity: 0, y: 12 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5 },
+  },
 };
 
 const SOCIAL_LINKS = [
@@ -48,7 +53,7 @@ const SOCIAL_LINKS = [
   },
   {
     href: "https://g.dev/avanthikaks",
-    image: "/google-developers.svg", // download or create this locally
+    image: "/google-developers.svg",
     alt: "Google Developer Program",
   },
   {
@@ -126,7 +131,9 @@ export default function HeroSection() {
               whileTap={{ scale: 0.98 }}
               className="bg-black dark:bg-white text-white dark:text-black hover:bg-zinc-900 dark:hover:bg-zinc-100 font-bold text-xs tracking-wider uppercase px-7 py-4 rounded-full cursor-pointer border-none flex items-center gap-1.5 shadow-sm"
               onClick={() =>
-                document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })
+                document
+                  .getElementById("projects")
+                  ?.scrollIntoView({ behavior: "smooth" })
               }
             >
               View Projects <ArrowRight size={14} />
@@ -144,25 +151,28 @@ export default function HeroSection() {
             </motion.a>
           </motion.div>
 
-          {/* Social links underneath */}
-          <motion.div variants={item} className="flex flex-wrap gap-4 items-center">
-            {SOCIAL_LINKS.map((link) => {
-              const Icon = link.icon;
-
-              return (
-                <a
-                  key={link.alt}
-                  href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex h-7 w-7 items-center justify-center text-zinc-600 transition-all duration-250 hover:scale-105 hover:text-black dark:text-zinc-400 dark:hover:text-white"
-                  title={link.alt}
-                  aria-label={link.alt}
-                >
-                  <Icon size={21} strokeWidth={1.75} aria-hidden="true" />
-                </a>
-              );
-            })}
+          {/* Social links */}
+          <motion.div
+            variants={item}
+            className="flex flex-wrap gap-4 items-center"
+          >
+            {SOCIAL_LINKS.map((link) => (
+              <a
+                key={link.alt}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex h-7 w-7 items-center justify-center transition-all duration-250 hover:scale-105"
+                title={link.alt}
+                aria-label={link.alt}
+              >
+                <img
+                  src={link.image}
+                  alt={link.alt}
+                  className="h-[21px] w-[21px] object-contain"
+                />
+              </a>
+            ))}
           </motion.div>
         </motion.div>
 
@@ -182,23 +192,33 @@ export default function HeroSection() {
             />
           </div>
 
-          {/* Floating locator badge card at bottom */}
+          {/* Floating locator badge */}
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
             className="absolute bottom-[-15px] left-1/2 -translate-x-1/2 sm:left-4 sm:translate-x-0 bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-2xl px-5 py-3 shadow-md flex items-center gap-3 w-fit cursor-pointer hover:border-zinc-300 dark:hover:border-zinc-700 transition-colors"
             onClick={() =>
-              document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })
+              document
+                .getElementById("contact")
+                ?.scrollIntoView({ behavior: "smooth" })
             }
           >
             <div className="w-8 h-8 rounded-full bg-zinc-100 dark:bg-zinc-900 flex items-center justify-center text-black dark:text-white">
               <MapPin size={16} />
             </div>
+
             <div className="flex flex-col text-left">
-              <span className="text-xs text-zinc-500 dark:text-zinc-400 uppercase tracking-widest leading-none font-bold">Product Designer</span>
+              <span className="text-xs text-zinc-500 dark:text-zinc-400 uppercase tracking-widest leading-none font-bold">
+                Product Designer
+              </span>
+
               <span className="text-xs text-black dark:text-white font-bold mt-1.5 flex items-center gap-1">
-                Kozhikode, Kerala, India <ArrowRight size={12} className="text-zinc-400 dark:text-zinc-500" />
+                Kozhikode, Kerala, India
+                <ArrowRight
+                  size={12}
+                  className="text-zinc-400 dark:text-zinc-500"
+                />
               </span>
             </div>
           </motion.div>
@@ -207,3 +227,4 @@ export default function HeroSection() {
     </section>
   );
 }
+
