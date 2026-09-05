@@ -2,6 +2,7 @@ import Header from "./components/Header";
 import HeroSection from "./components/HeroSection";
 import AboutSection from "./components/AboutSection";
 import WorkSection from "./components/WorkSection";
+import DesignWorkSection from "./components/DesignWorkSection";
 import ExperienceSection from "./components/ExperienceSection";
 import WorkflowSection from "./components/WorkflowSection";
 import AISection from "./components/AISection";
@@ -17,6 +18,7 @@ export default function Home() {
       <HeroSection />
       <AboutSection />
       <WorkSection />
+      <DesignWorkSection />
       <ExperienceSection />
       <WorkflowSection />
       <AISection />

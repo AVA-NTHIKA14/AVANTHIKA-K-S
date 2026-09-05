@@ -96,7 +96,7 @@ export default function ProjectCaseStudy() {
                   View Figma File <Figma size={12} />
                 </a>
               )}
-              <a
+              {project.githubUrl && <a
                 href={project.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -104,7 +104,7 @@ export default function ProjectCaseStudy() {
                 title="View GitHub Repository"
               >
                 <Github size={16} />
-              </a>
+              </a>}
             </div>
           </div>
         </div>
@@ -315,7 +315,7 @@ export default function ProjectCaseStudy() {
             </div>
 
             {/* Quick action card */}
-            <div className="border border-zinc-200 bg-zinc-50/50 rounded-3xl p-6 border-dashed">
+            {project.githubUrl && <div className="border border-zinc-200 bg-zinc-50/50 rounded-3xl p-6 border-dashed">
               <h4 className="text-black font-extrabold text-sm mb-2">Interested in the code?</h4>
               <p className="text-zinc-500 text-xs mb-4 leading-relaxed font-semibold">
                 Inspect the complete file structure, API endpoints, libraries, and integration files in the repository.
@@ -328,7 +328,7 @@ export default function ProjectCaseStudy() {
               >
                 Inspect Repository <Github size={14} />
               </a>
-            </div>
+            </div>}
           </div>
 
         </div>

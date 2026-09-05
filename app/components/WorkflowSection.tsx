@@ -9,18 +9,18 @@ export default function WorkflowSection() {
   const principles = [
     {
       num: "01",
-      title: "Make the next step clear",
-      text: "I use clear hierarchy, labels, and feedback so people can understand what to do next."
+      title: "Clarity over cleverness",
+      text: "If someone has to pause and figure out an interface, that is a design problem, not a user problem."
     },
     {
       num: "02",
-      title: "Design for the real context",
-      text: "I consider the device, environment, connectivity, and constraints people work with."
+      title: "Design for the actual conditions",
+      text: "A form that works on a laptop in an office can fail for a field worker on a cracked phone screen with poor signal. I design for the second case."
     },
     {
       num: "03",
-      title: "Test and improve",
-      text: "I share work early, gather feedback, and refine it based on what I learn."
+      title: "Ship early, even when it is rough",
+      text: "I would rather get something in front of a real panchayat clerk in week two than polish it alone for a month."
     }
   ];
 
@@ -46,7 +46,7 @@ export default function WorkflowSection() {
           transition={{ duration: 0.6 }}
           className="text-black dark:text-white font-bold text-2xl sm:text-3xl md:text-4xl tracking-tight mb-16 max-w-4xl text-left leading-tight"
         >
-          How I approach product and interface work.
+          How I think about design.
         </motion.h2>
 
         {/* 3 Principles Cards Stack */}

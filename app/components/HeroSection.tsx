@@ -41,26 +41,6 @@ const SOCIAL_LINKS = [
     image: "https://app.mulearn.org/favicon.ico",
     alt: "μLearn",
   },
-  {
-    href: "https://tinkerhub.org/@avanthika",
-    image: "https://tinkerhub.org/favicon.ico",
-    alt: "TinkerHub",
-  },
-  {
-    href: "https://fossunited.org/u/avanthika_k_s",
-    image: "https://fossunited.org/favicon.ico",
-    alt: "FOSS United",
-  },
-  {
-    href: "https://g.dev/avanthikaks",
-    image: "/google-developers.svg",
-    alt: "Google Developer Program",
-  },
-  {
-    href: "https://buymeacoffee.com/avanthika.k.s",
-    image: "https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg",
-    alt: "Buy Me a Coffee",
-  },
 ];
 
 export default function HeroSection() {
@@ -140,9 +120,7 @@ export default function HeroSection() {
             </motion.button>
 
             <motion.a
-              href={PORTFOLIO_DATA.contact.resumeUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/resume"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               className="bg-white dark:bg-black hover:bg-zinc-50 dark:hover:bg-zinc-900/50 text-black dark:text-white font-bold text-xs tracking-wider uppercase px-7 py-4 rounded-full border border-zinc-200 dark:border-zinc-800 shadow-sm flex items-center gap-1.5 cursor-pointer"

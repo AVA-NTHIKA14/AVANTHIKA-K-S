@@ -1,26 +1,61 @@
 "use client";
+import { useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, Printer } from "lucide-react";
+import { ArrowLeft, Printer, Download } from "lucide-react";
 import { PORTFOLIO_DATA } from "../data/portfolioData";
 
 export default function ResumePage() {
+  const [selectedResume, setSelectedResume] = useState(PORTFOLIO_DATA.resumes.default);
+
   return (
     <main className="bg-zinc-50 min-h-screen py-12 px-6 print:bg-white print:py-0 print:px-0 text-left">
       {/* Navigation bar (hidden during print) */}
-      <div className="max-w-[800px] mx-auto mb-8 flex justify-between items-center print:hidden">
-        <Link
-          href="/"
-          className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-zinc-600 hover:text-black transition-colors cursor-pointer"
-        >
-          <ArrowLeft size={16} /> Back to Portfolio
-        </Link>
+      <div className="max-w-[800px] mx-auto mb-8 print:hidden">
+        <div className="flex justify-between items-center mb-6">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-zinc-600 hover:text-black transition-colors cursor-pointer"
+          >
+            <ArrowLeft size={16} /> Back to Portfolio
+          </Link>
 
-        <button
-          onClick={() => window.print()}
-          className="bg-black hover:bg-zinc-900 text-white font-extrabold text-xs tracking-wider uppercase px-5 py-3 rounded-full flex items-center gap-1.5 transition-colors cursor-pointer shadow-sm"
-        >
-          <Printer size={14} /> Print / Save as PDF
-        </button>
+          <button
+            onClick={() => window.print()}
+            className="bg-black hover:bg-zinc-900 text-white font-extrabold text-xs tracking-wider uppercase px-5 py-3 rounded-full flex items-center gap-1.5 transition-colors cursor-pointer shadow-sm"
+          >
+            <Printer size={14} /> Print / Save as PDF
+          </button>
+        </div>
+
+        {/* Resume Selector */}
+        <div className="bg-white border border-zinc-200 rounded-lg p-4 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+          <label className="text-xs font-bold uppercase tracking-wider text-zinc-700 whitespace-nowrap">
+            Resume Version:
+          </label>
+          <div className="flex flex-wrap gap-2 flex-1">
+            {PORTFOLIO_DATA.resumes.versions.map((version) => (
+              <button
+                key={version.url}
+                onClick={() => setSelectedResume(version.url)}
+                className={`text-xs font-bold uppercase tracking-wider px-4 py-2 rounded-full transition-all cursor-pointer ${
+                  selectedResume === version.url
+                    ? "bg-black text-white"
+                    : "bg-zinc-100 text-zinc-700 hover:bg-zinc-200"
+                }`}
+              >
+                {version.label}
+              </button>
+            ))}
+          </div>
+          <a
+            href={selectedResume}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="ml-auto bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs tracking-wider uppercase px-4 py-2 rounded-full flex items-center gap-1.5 transition-colors cursor-pointer whitespace-nowrap"
+          >
+            <Download size={14} /> Download
+          </a>
+        </div>
       </div>
 
       {/* ATS Sheet container */}

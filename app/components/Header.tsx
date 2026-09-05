@@ -3,12 +3,12 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { usePathname, useRouter } from "next/navigation";
 import { Download, Moon, Sun, Menu, X } from "lucide-react";
-import { PORTFOLIO_DATA } from "../data/portfolioData";
 
 const NAV_LINKS = [
   { id: "home", name: "Home" },
   { id: "about-me", name: "About" },
   { id: "projects", name: "Projects" },
+  { id: "design-work", name: "Design Work" },
   { id: "experience", name: "Experience" },
   { id: "skills", name: "Skills" },
   { id: "education", name: "Education" },
@@ -168,9 +168,7 @@ export default function Header() {
 
           {/* Black/White Resume Button */}
           <a
-            href={PORTFOLIO_DATA.contact.resumeUrl}
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/resume"
             className="bg-black dark:bg-white hover:bg-zinc-900 dark:hover:bg-zinc-100 text-white dark:text-black font-bold text-xs tracking-wider uppercase px-5 py-2.5 rounded-full flex items-center gap-1.5 transition-colors cursor-pointer shadow-sm"
           >
             <Download size={14} /> Resume

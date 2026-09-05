@@ -8,16 +8,16 @@ export default function AISection() {
 
   const aiPillars = [
     {
-      title: "Research synthesis",
-      text: "I use AI to help group patterns from interview transcripts, then review and interpret the findings myself."
+      title: "Making sense of interview notes",
+      text: "I use AI to cluster and surface patterns from user interview transcripts, then review and interpret the findings myself."
     },
     {
-      title: "Early exploration",
-      text: "For early exploration, AI helps generate copy and visual directions that I evaluate and refine."
+      title: "Exploring UI copy and icon options",
+      text: "For early explorations, AI helps me generate UI copy variants and icon directions that I curate rather than finalize."
     },
     {
-      title: "Accessibility review",
-      text: "I use automated contrast and ARIA checks alongside manual review, with attention to edge cases."
+      title: "Catching accessibility issues early",
+      text: "Automated contrast checks and ARIA suggestions run alongside manual review, so I can focus on edge cases."
     }
   ];
 

@@ -16,7 +16,7 @@ export interface CaseStudy {
   liveUrl?: string;
   /** TODO: add the published Figma URL for design-only case studies. */
   figmaUrl?: string;
-  githubUrl: string;
+  githubUrl?: string;
   overview: string;
   problem: string;
   goals: string[];
@@ -69,6 +69,23 @@ export interface CertificationItem {
   credentialUrl?: string;
 }
 
+export interface ResumesConfig {
+  default: string;
+  versions: {
+    label: string;
+    url: string;
+  }[];
+}
+
+export interface DesignWork {
+  id: number;
+  title: string;
+  description: string;
+  figmaUrl: string;
+  thumbnail?: string;
+  category: string;
+}
+
 export const PORTFOLIO_DATA: {
   name: string;
   headline: string;
@@ -80,16 +97,13 @@ export const PORTFOLIO_DATA: {
   skills: SkillCategory[];
   education: EducationItem[];
   certifications: CertificationItem[];
-  contact: { email: string; github: string; linkedin: string; location: string; resumeUrl: string };
+  designWorks: DesignWork[];
+  resumes: ResumesConfig;
+  contact: { email: string; github: string; linkedin: string; location: string };
 } = {
   name: "Avanthika K S",
   headline: "Designing thoughtful digital experiences and bringing them to life through code.",
-  // Headline options for review:
-  // 1. Product Designer & Full-Stack Builder
-  // 2. Builder, Designer, and Maker of useful digital products
-  // 3. Designing and building accessible digital products
-  // TODO: choose a headline option. The neutral identity line remains visible until then.
-  subHeadline: "Builder / Designer / Maker | GHCI'25 AIP Scholar | ECE Undergrad @ GEC Palakkad",
+  subHeadline: "Product Designer & Full-Stack Builder — ECE Undergrad @ GEC Palakkad",
   bio: [
     "I am an Electronics and Communication Engineering student at Government Engineering College Palakkad who enjoys both designing and building digital products.",
     "I refuse to be boxed in as only a UI/UX Designer or only a Frontend Developer. My identity bridges these fields: I am a builder who enjoys understanding user constraints, designing minimal layouts, and writing clean, type-safe code to implement them.",
@@ -117,41 +131,41 @@ export const PORTFOLIO_DATA: {
       period: "Feb 2026 - Present",
       techStack: ["React", "TypeScript", "Tailwind CSS", "Leaflet Maps", "Firebase Auth", "Firestore", "Firebase Functions"],
       githubUrl: "https://github.com/AVA-NTHIKA14/LSG-Track",
-      overview: "A digital spatial compliance portal for local panchayats, mapping trade and building licenses to interactive GIS layers to replace physical register logging. It coordinates survey lists and tracks compliance status by geographic wards.",
-      problem: "Tracking license renewals and inspections manually across multiple wards causes administrative delays and lost municipal revenue. Field workers lack a centralized coordinates database.",
+      overview: "I built the frontend, Firebase/Firestore data layer, and role-based access control end-to-end for an e-governance GIS platform tracking Kerala Grama Panchayat trade-license compliance.",
+      problem: "Field officers need an accessible way to review trade-license data and prioritize inspections, including in areas with limited connectivity.",
       goals: [
-        "Geotag survey records on interactive maps using Leaflet GIS.",
-        "Isolate datasets and dashboards securely matching each user's Local Body ID.",
-        "Automate renewal workflows and notification alerts."
+        "Deploy an interactive Leaflet GIS map with real Kerala ward-boundary data and choropleth layers.",
+        "Enforce per-tenant, role-based data access with Firestore security rules.",
+        "Ship as an installable, bilingual (English/Malayalam) Progressive Web App."
       ],
       research: {
-        methodology: "I spoke with local municipal staff, data-entry operators, and field inspectors to understand their license-tracking process.",
+        methodology: "I based the system on the needs of Kerala Grama Panchayats tracking trade-license compliance and field officer priorities.",
         insights: [
-          "Low-connectivity rural sectors require local browser cache synchronization for on-site surveys.",
-          "Simple, mobile-friendly forms are necessary for inspectors conducting field compliance reviews."
+          "Field officers require ward-level geographic context to prioritize inspections.",
+          "Progressive Web App installability is essential for offline-capable field use."
         ]
       },
       design: {
-        process: "Designed a clean, spacious layout separating ward boundary layers. Emphasized contrast borders and large headers to secure fast readability for operators.",
-        wireframes: "Mocked structural layouts with map coordinates occupying the left panel and licensing ledgers in the right sidebar drawer.",
-        iterations: "Simplified map marker layouts to use high-contrast status colors instead of complex icons to improve render speeds.",
-        finalUI: "Clean monochrome splitscreen containing dynamic coordinates tables and visual charts."
+        process: "I designed the map interface around ward boundaries, compliance status, and field-officer inspection priorities.",
+        wireframes: "I structured a map-led workspace that maintains both geographic context and data records in a single view.",
+        iterations: "I introduced choropleth layers and inspection-priority heatmaps to clearly communicate inspection urgency.",
+        finalUI: "The interface supports bilingual (English/Malayalam) content and installs as a Progressive Web App with automated Vitest tests."
       },
       development: {
-        architecture: "React SPA interacting with Firestore collections. Background synchronization runs on serverless functions with secured environment variables.",
+        architecture: "React + TypeScript frontend using Leaflet for GIS, Firebase/Firestore for data and auth, and role-based Firestore security rules for access control.",
         techDecisions: [
-          { title: "Leaflet Maps API", desc: "Used Leaflet for lightweight municipal boundary rendering using customized GeoJSON overlays." },
-          { title: "Multi-Tenant Collection Filters", desc: "Enforced database security rules filtering records according to user's registered Local Body ID." }
+          { title: "Leaflet with real GeoJSON", desc: "Integrated actual Kerala ward-boundary data for choropleth visualization and inspection-priority heatmaps." },
+          { title: "CSV/Excel import with SheetJS", desc: "Built heuristic column mapping and deduplication to simplify bulk data uploads." }
         ],
         challenges: [
-          { title: "GPS Accuracy Deviations", desc: "Clerks reported coordinate offsets in rural zones. Optimized by averaging GPS inputs and saving fallback offline logs." },
-          { title: "Offline Storage Coordination", desc: "Implemented local browser cache storage to automatically queue and synchronize coordinates once network connection is restored." }
+          { title: "Tenant data isolation", desc: "Engineered Firestore security rules to enforce per-tenant, role-based data access across users and inspectors." },
+          { title: "Field offline capability", desc: "Shipped as an installable PWA with bilingual support and automated test coverage for field deployments." }
         ]
       },
       keyFeatures: [
-        { title: "GIS Compliance Maps", desc: "Interactive map interfaces plotting commercial licenses and boundaries in real-time." },
-        { title: "Ward Data Visualizations", desc: "Displays charts analyzing active, expiring, or unlicensed properties per sector." },
-        { title: "GPS-Enabled Survey Tool", desc: "A survey page capturing GPS coordinates and license parameters directly in the field." }
+          { title: "Interactive Leaflet GIS map", desc: "Real Kerala ward boundaries with choropleth layers and inspection-priority heatmaps for field officers." },
+          { title: "CSV/Excel import", desc: "SheetJS-based import with heuristic column mapping and deduplication." },
+          { title: "Role-based access control", desc: "Firestore security rules enforce per-tenant, role-based data isolation." }
       ],
       learnings: [
         "Civic web portals require clean validation schemas and responsive navigation paths for non-technical users.",
@@ -227,8 +241,8 @@ export const PORTFOLIO_DATA: {
       tagline: "A conversational mental wellness companion that listens and matches your emotional state.",
       featured: false,
       category: "AI Chat / Web Application",
-      role: ["builder"],
-      contributionRole: "LLM Engineer & Frontend Builder",
+      role: ["designer"],
+      contributionRole: "UI/UX Designer & Interaction Architect",
       origin: "hackathon",
       period: "Oct 2025 - Nov 2025",
       techStack: ["React", "JavaScript", "Groq API", "Llama 3", "Supabase Auth", "Tailwind CSS"],
@@ -279,53 +293,52 @@ export const PORTFOLIO_DATA: {
       ]
     },
     {
-      slug: "inclusive-checker",
-      title: "Inclusive Checker",
-      subtitle: "Accessibility Content Scanner",
-      tagline: "Scanning text fields for ableism, ageism, and bias using Google Gemini AI.",
+      slug: "prism",
+      title: "Prism",
+      subtitle: "Digital Inclusive Language Checker",
+      tagline: "A full-stack tool for real-time detection of potentially biased language in writing.",
       featured: false,
-      category: "Chrome Extension / AI Audit",
-      role: ["builder"],
-      contributionRole: "Chrome Extension & LLM Developer",
-      origin: "hackathon",
-      period: "Nov 2025 - Dec 2025",
-      techStack: ["React", "TypeScript", "Tailwind CSS", "Google Gemini API", "Chrome Extension APIs"],
-      githubUrl: "https://github.com/AVA-NTHIKA14/ALTaware",
-      overview: "An accessibility auditor that integrates into input forms, scanning content for unintentional exclusionary phrasing (gender biases, ableist language, age assumptions) and suggesting inclusive overrides.",
-      problem: "Public notices, academic content, and job postings frequently use non-inclusive terms that alienate applicants, and grammar checkers lack the context to flag these issues.",
+      category: "Full-Stack AI Tool",
+      role: ["maker"],
+      contributionRole: "Solo Full-Stack Builder",
+      period: "2026",
+      techStack: ["Next.js", "TypeScript", "Fastify", "Groq LLaMA 3.3", "Firebase Auth"],
+      githubUrl: "https://github.com/AVA-NTHIKA14/prism",
+      overview: "I independently built Prism, a full-stack inclusive-language detection tool: Next.js frontend, Fastify API backend, and Groq LLaMA 3.3 for real-time semantic bias detection.",
+      problem: "Writers need reliable feedback on biased language that combines semantic context understanding with a dependable lexical safety net.",
       goals: [
-        "Audit written text in real-time as users type.",
-        "Retrieve suggestions from Gemini API using structured rules schemas.",
-        "Display suggestions with click-to-replace actions."
+        "Analyze language in real time using Groq's LLaMA 3.3 model for semantic bias detection.",
+        "Merge LLM-based semantic analysis with a deterministic lexical safety net.",
+        "Validate and deduplicate results through a custom decision engine before presentation."
       ],
       research: {
-        methodology: "Studied WCAG guidelines and researched human resources diversity standards to compile common exclusionary keywords.",
+        methodology: "I designed a dual-layer detection pipeline merging semantic context analysis with deterministic lexical matching.",
         insights: [
-          "Writers want to learn why a term is flagged, rather than just getting an automated fix.",
-          "Suggestions must be easy to apply without disrupting typing flow."
+          "LLM outputs require deterministic validation before reaching the user interface.",
+          "A lexical safety net catches bias terms that semantic analysis may miss due to model variance."
         ]
       },
       design: {
-        process: "Designed a clean popup card interface with clear severity markers. Used high-contrast borders and spacious text layout blocks.",
-        wireframes: "Mocked editor split view: content panel on the left, highlighted matches and suggestions drawers on the right.",
-        iterations: "Adjusted warning indicator layouts from color-only cues to styled warning badges to comply with accessibility standards.",
-        finalUI: "Clean typography with spacious grids, explicit warning tags, and simple replacement triggers."
+        process: "I designed the interface to clearly surface flagged language and suggest alternatives while maintaining readability.",
+        wireframes: "I planned the writing flow to keep analysis results visually connected to source text.",
+        iterations: "I refined the decision engine to reliably validate and deduplicate results across detection layers.",
+        finalUI: "The interface connects seamlessly to a structured Fastify API for responsive real-time analysis."
       },
       development: {
-        architecture: "React extension interacting with Chrome tabs. Sends input to Gemini models and returns JSON data containing match ranges and overrides.",
+        architecture: "Monorepo structure with web, api, core-detector, and core-client packages. Firebase Auth for user management, unit tests for validation.",
         techDecisions: [
-          { title: "Structured Schema Models", desc: "Configured prompts to force Gemini models to output JSON strings matching TypeScript interfaces." },
-          { title: "Dynamic In-Place Edits", desc: "Wrote coordinate-based string splicing functions to replace flagged words instantly." }
+          { title: "Dual-layer detection pipeline", desc: "Merges LLM-based semantic analysis (Groq LLaMA 3.3) with a deterministic lexical safety net." },
+          { title: "Monorepo with clear ownership", desc: "Separated web frontend, Fastify API, detector logic, and shared client utilities for maintainability." }
         ],
         challenges: [
-          { title: "API Response Delay", desc: "Wait times for model reviews disrupted typing flows. Resolved by running audits on-demand or after user pauses." },
-          { title: "Formatting Cleanup", desc: "Parsed out markdown markup elements from API responses before performing JSON conversion." }
+          { title: "Result deduplication and validation", desc: "Built a custom decision engine to validate and deduplicate results across semantic and lexical detection sources." },
+          { title: "Real-time API performance", desc: "Integrated Groq's LLaMA 3.3 with Fastify for responsive analysis without blocking the UI." }
         ]
       },
       keyFeatures: [
-        { title: "Gemini Bias Scans", desc: "Flags ageist, gender-biased, or non-inclusive phrases in text inputs." },
-        { title: "Educational Cards", desc: "Explains why words are flagged and suggests alternative terminology." },
-        { title: "One-Click Overrides", desc: "Instantly replaces flagged words in the text box with chosen alternatives." }
+          { title: "Semantic bias detection", desc: "LLaMA 3.3 analyzes language in context for nuanced bias detection." },
+          { title: "Lexical safety net", desc: "Deterministic checks catch common bias terms missed by semantic analysis." },
+          { title: "Validated results", desc: "Custom decision engine deduplicates and validates findings before display." }
       ],
       learnings: [
         "Prompt engineering requires robust validation checks to handle API variance.",
@@ -348,8 +361,7 @@ export const PORTFOLIO_DATA: {
       origin: "hackathon",
       period: "Aug 2025 - Sep 2025",
       techStack: ["Figma Prototyping", "User Research", "Wireframing", "Usability Audits"],
-      githubUrl: "https://github.com/AVA-NTHIKA14/Portfolio",
-      // TODO: add `figmaUrl` once the file is ready to share.
+      figmaUrl: "https://www.figma.com/design/G2iSQSGLrXMXa1vLC6vIZc/Works-by-Avanthika",
       overview: "I designed an agency workspace prototype to help teams track handoffs, milestones, and task automation in one place.",
       problem: "Teams lose track of project handoffs and milestones across scattered dashboards, causing communication bottlenecks and project delays.",
       goals: [
@@ -541,7 +553,53 @@ export const PORTFOLIO_DATA: {
     email: "avanthikaks1874@gmail.com",
     github: "https://github.com/AVA-NTHIKA14",
     linkedin: "https://linkedin.com/in/avanthika-ks",
-    location: "Kozhikode, Kerala, India",
-    resumeUrl: "/assets/Avanthika_Resume.pdf"
-  }
+    location: "Kozhikode, Kerala, India"
+  },
+  resumes: {
+    default: "/assets/Avanthika_Resume_General.pdf",
+    versions: [
+      {
+        label: "General",
+        url: "/assets/Avanthika_Resume_General.pdf"
+      },
+      {
+        label: "Graphic Design Associate",
+        url: "/assets/Avanthika_Resume_DesignRole.pdf"
+      },
+      {
+        label: "Software Developer",
+        url: "/assets/Avanthika_Resume_DevRole.pdf"
+      }
+    ]
+  },
+  designWorks: [
+    {
+      id: 1,
+      title: "FOSS Club GEC Palakkad Event Poster",
+      description: "Co-branded event poster for FOSS Club with IEDC, featuring duotone visual treatment.",
+      figmaUrl: "https://www.figma.com/design/G2iSQSGLrXMXa1vLC6vIZc/Works-by-Avanthika",
+      category: "Event Design"
+    },
+    {
+      id: 2,
+      title: "Nattil Ninnu — Kerala Organic Produce Brand",
+      description: "Brand identity and landing page concept for local organic produce, including logomark and colour system.",
+      figmaUrl: "https://www.figma.com/design/G2iSQSGLrXMXa1vLC6vIZc/Works-by-Avanthika",
+      category: "Brand & Web"
+    },
+    {
+      id: 3,
+      title: "V-FIESTA IEEE PIE Kerala Instagram Campaign",
+      description: "Multi-post visual system for IEEE campus event promotion across social media.",
+      figmaUrl: "https://www.figma.com/design/G2iSQSGLrXMXa1vLC6vIZc/Works-by-Avanthika",
+      category: "Social Media"
+    },
+    {
+      id: 4,
+      title: "ISTE Student Chapter RIT Kottayam Website",
+      description: "Multi-page website design with unified visual identity for student chapter organization.",
+      figmaUrl: "https://www.figma.com/design/G2iSQSGLrXMXa1vLC6vIZc/Works-by-Avanthika",
+      category: "Web Design"
+    }
+  ]
 };

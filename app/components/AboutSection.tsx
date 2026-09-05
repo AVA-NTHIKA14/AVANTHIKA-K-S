@@ -37,13 +37,10 @@ export default function AboutSection() {
               transition={{ duration: 0.7 }}
               className="text-black dark:text-zinc-200 font-normal text-lg sm:text-xl md:text-2xl leading-[1.6] mb-8 tracking-normal text-left"
             >
-              I&apos;m a product design practitioner studying Electronics & Communication Engineering at GEC Palakkad. My work sits at the intersection of engineering logic and human empathy.
+              I&apos;m a final-year ECE student at GEC Palakkad who ended up designing as much as I code. Most of what I&apos;ve built started as a hackathon problem — a licensing system for a Grama Panchayat, a way for daily-wage workers to find nearby work — and turned into an opportunity to learn both the interface and the backend properly.
               <br />
               <br />
-              I believe the best interfaces are invisible they solve problems so intuitively that users never notice the design. I&apos;m obsessed with the moment when complexity becomes clarity.
-              <br />
-              <br />
-              Currently building my craft through real problems, design communities, and a healthy obsession with how things work.
+              I lead μLearn&apos;s district community work, have contributed to FOSS United, and am working to treat design as seriously as I already treat code.
             </motion.h2>
           </div>
 
@@ -83,6 +80,11 @@ export default function AboutSection() {
               </div>
             </motion.div>
           </div>
+        </div>
+
+        <div className="mt-10 border-t border-zinc-100 dark:border-zinc-900 pt-6">
+          <h3 className="text-xs font-bold uppercase tracking-[3px] text-zinc-500 mb-3">Communities</h3>
+          <p className="text-sm text-zinc-600 dark:text-zinc-400">μLearn · TinkerHub · FOSS United · Google Developer Program</p>
         </div>
 
         {/* BOTTOM METRICS */}
