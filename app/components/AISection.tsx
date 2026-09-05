@@ -8,16 +8,16 @@ export default function AISection() {
 
   const aiPillars = [
     {
-      title: "Research Synthesis",
-      text: "I use AI to cluster and surface patterns from user interview transcripts cutting synthesis time by 60% so I can focus on interpretation."
+      title: "Research synthesis",
+      text: "I use AI to help group patterns from interview transcripts, then review and interpret the findings myself."
     },
     {
-      title: "Variant Generation",
-      text: "For early explorations, AI helps me generate UI copy variants and iconography directions raw material I curate, not finalize."
+      title: "Early exploration",
+      text: "For early exploration, AI helps generate copy and visual directions that I evaluate and refine."
     },
     {
-      title: "Accessibility Audit",
-      text: "Automated contrast checks and ARIA suggestions run in parallel with manual review AI handles the checklist so I focus on edge cases."
+      title: "Accessibility review",
+      text: "I use automated contrast and ARIA checks alongside manual review, with attention to edge cases."
     }
   ];
 
@@ -33,7 +33,7 @@ export default function AISection() {
           className="flex items-center gap-2 mb-12 text-left"
         >
           <span className="w-6 h-px bg-zinc-400 dark:bg-zinc-650" />
-          <span className="text-zinc-550 dark:text-zinc-450 text-xs tracking-[3px] uppercase font-semibold">AI IN MY PROCESS</span>
+          <span className="text-zinc-550 dark:text-zinc-450 text-xs tracking-[3px] uppercase font-semibold">Using AI responsibly</span>
         </motion.div>
 
         {/* Big headline */}
@@ -43,7 +43,7 @@ export default function AISection() {
           transition={{ duration: 0.6 }}
           className="text-black dark:text-white font-bold text-2xl sm:text-3xl md:text-4xl tracking-tight mb-12 max-w-4xl text-left leading-tight"
         >
-          I use AI as a <span className="text-zinc-400 dark:text-zinc-500 font-normal">collaborator</span>, not a replacement.
+          AI supports my process; I remain responsible for the decisions.
         </motion.h2>
 
         {/* 3 Pillars Grid */}

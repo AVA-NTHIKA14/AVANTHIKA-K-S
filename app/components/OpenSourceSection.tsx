@@ -215,6 +215,16 @@ export default function OpenSourceSection() {
                 className="w-full h-auto max-h-[140px] object-contain"
               />
             </motion.div>
+
+            <div className="border border-dashed border-zinc-300 bg-zinc-50/50 rounded-3xl p-6">
+              <h4 className="text-black font-extrabold text-sm mb-3">Open Source Contributions</h4>
+              {/* TODO: replace these placeholders with real repository, description, and direct PR or issue links. */}
+              <ul className="space-y-3 text-sm">
+                {["TODO: repository — one-line contribution description — PR or issue link", "TODO: repository — one-line contribution description — PR or issue link"].map((entry, index) => (
+                  <li key={index} className="text-zinc-500 border-t border-zinc-200 pt-3 first:border-t-0 first:pt-0">{entry}</li>
+                ))}
+              </ul>
+            </div>
           </div>
 
         </div>

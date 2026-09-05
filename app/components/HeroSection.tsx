@@ -110,7 +110,7 @@ export default function HeroSection() {
             className="font-light text-zinc-600 dark:text-zinc-300 leading-[1.3] mb-6 tracking-tight max-w-[620px]"
             style={{ fontSize: "clamp(24px, 3.2vw, 42px)" }}
           >
-            Design experiences that make complex things feel obvious.
+            I design and build accessible digital products.
           </motion.h2>
 
           {/* Subtitle */}
@@ -210,7 +210,7 @@ export default function HeroSection() {
 
             <div className="flex flex-col text-left">
               <span className="text-xs text-zinc-500 dark:text-zinc-400 uppercase tracking-widest leading-none font-bold">
-                Product Designer
+                Builder / Designer
               </span>
 
               <span className="text-xs text-black dark:text-white font-bold mt-1.5 flex items-center gap-1">

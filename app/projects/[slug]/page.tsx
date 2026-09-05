@@ -1,7 +1,7 @@
 "use client";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, ExternalLink, Github, CheckCircle2, AlertTriangle, BookOpen } from "lucide-react";
+import { ArrowLeft, ExternalLink, Github, CheckCircle2, AlertTriangle, BookOpen, Figma } from "lucide-react";
 import Header from "../../components/Header";
 import { PORTFOLIO_DATA } from "../../data/portfolioData";
 
@@ -51,7 +51,7 @@ export default function ProjectCaseStudy() {
           {/* Heading */}
           <div className="max-w-4xl text-left">
             <span className="text-[10px] sm:text-xs font-extrabold tracking-[3px] uppercase text-zinc-500 bg-zinc-100 border border-zinc-200 px-3.5 py-1.5 rounded-full">
-              {project.category}
+              {project.role.map((role) => role[0].toUpperCase() + role.slice(1)).join(" / ")}
             </span>
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-black mt-6 tracking-tight leading-tight">
               {project.title}
@@ -65,7 +65,7 @@ export default function ProjectCaseStudy() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16 border-t border-zinc-150 dark:border-zinc-800 pt-8 max-w-5xl text-left">
             <div>
               <p className="text-zinc-400 dark:text-zinc-500 text-[10px] uppercase tracking-wider font-bold">Role</p>
-              <p className="text-black dark:text-white font-extrabold text-sm sm:text-base mt-1">{project.role}</p>
+              <p className="text-black dark:text-white font-extrabold text-sm sm:text-base mt-1">{project.contributionRole}</p>
             </div>
             <div>
               <p className="text-zinc-400 dark:text-zinc-500 text-[10px] uppercase tracking-wider font-bold">Timeline</p>
@@ -84,6 +84,16 @@ export default function ProjectCaseStudy() {
                   className="bg-black text-white font-extrabold text-[10px] tracking-wider uppercase px-5 py-3 rounded-full flex items-center gap-1.5 hover:bg-zinc-900 transition-all cursor-pointer shadow-sm"
                 >
                   Live Demo <ExternalLink size={12} />
+                </a>
+              )}
+              {project.figmaUrl && (
+                <a
+                  href={project.figmaUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-black text-white font-extrabold text-[10px] tracking-wider uppercase px-5 py-3 rounded-full flex items-center gap-1.5 hover:bg-zinc-900 transition-all cursor-pointer shadow-sm"
+                >
+                  View Figma File <Figma size={12} />
                 </a>
               )}
               <a
@@ -109,7 +119,7 @@ export default function ProjectCaseStudy() {
             
             {/* Overview */}
             <div>
-              <h2 className="text-black font-extrabold text-2xl sm:text-3xl mb-6 tracking-tight">1. Executive Summary</h2>
+              <h2 className="text-black font-extrabold text-2xl sm:text-3xl mb-6 tracking-tight">Overview</h2>
               <p className="text-zinc-500 font-medium text-base sm:text-lg leading-relaxed">
                 {project.overview}
               </p>
@@ -117,7 +127,7 @@ export default function ProjectCaseStudy() {
 
             {/* Problem Statement */}
             <div className="border-t border-zinc-100 pt-12">
-              <h2 className="text-black font-extrabold text-2xl sm:text-3xl mb-6 tracking-tight">2. Problem Statement</h2>
+              <h2 className="text-black font-extrabold text-2xl sm:text-3xl mb-6 tracking-tight">Problem</h2>
               <p className="text-zinc-650 font-medium text-base sm:text-lg leading-relaxed bg-zinc-50 border border-zinc-200 rounded-2xl p-6 sm:p-8">
                 {project.problem}
               </p>
@@ -125,7 +135,7 @@ export default function ProjectCaseStudy() {
 
             {/* Goals & Objectives */}
             <div className="border-t border-zinc-100 pt-12">
-              <h2 className="text-black font-extrabold text-2xl sm:text-3xl mb-6 tracking-tight">3. Key Objectives</h2>
+              <h2 className="text-black font-extrabold text-2xl sm:text-3xl mb-6 tracking-tight">Objectives</h2>
               <div className="grid sm:grid-cols-2 gap-4">
                 {project.goals.map((goal, idx) => (
                   <div key={idx} className="flex gap-3 bg-zinc-50/50 border border-zinc-200 rounded-2xl p-5 items-start">
@@ -138,14 +148,14 @@ export default function ProjectCaseStudy() {
 
             {/* Research & Discovery */}
             <div className="border-t border-zinc-100 pt-12">
-              <h2 className="text-black font-extrabold text-2xl sm:text-3xl mb-6 tracking-tight">4. Research & Discovery</h2>
+              <h2 className="text-black font-extrabold text-2xl sm:text-3xl mb-6 tracking-tight">Research</h2>
               <p className="text-zinc-500 font-medium text-base sm:text-lg leading-relaxed mb-6">
                 {project.research.methodology}
               </p>
               
               <div className="border border-zinc-200 bg-zinc-50/50 rounded-2xl p-6 sm:p-8">
                 <h4 className="text-black font-extrabold text-xs uppercase tracking-wider mb-4 flex items-center gap-2">
-                  <BookOpen size={16} className="text-zinc-700" /> Critical User Insights
+                  <BookOpen size={16} className="text-zinc-700" /> Key insights
                 </h4>
                 <ul className="space-y-3 pl-0 list-none text-zinc-500 text-sm leading-relaxed font-semibold">
                   {project.research.insights.map((insight, idx) => (
@@ -160,7 +170,7 @@ export default function ProjectCaseStudy() {
 
             {/* Design Process */}
             <div className="border-t border-zinc-100 pt-12">
-              <h2 className="text-black font-extrabold text-2xl sm:text-3xl mb-6 tracking-tight">5. Design & Prototyping</h2>
+              <h2 className="text-black font-extrabold text-2xl sm:text-3xl mb-6 tracking-tight">Design Decisions</h2>
               
               <div className="grid gap-6">
                 <div className="bg-zinc-50/30 border border-zinc-200 rounded-2xl p-6">
@@ -186,9 +196,28 @@ export default function ProjectCaseStudy() {
               </div>
             </div>
 
+            {project.slug === "workflow" && (
+              <div className="border-t border-zinc-100 pt-12">
+                <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+                  <h2 className="text-black font-extrabold text-2xl sm:text-3xl tracking-tight">Prototype Frames</h2>
+                  {project.figmaUrl ? (
+                    <a href={project.figmaUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 border border-zinc-300 rounded-full px-4 py-2 text-xs font-bold text-black hover:bg-zinc-50"><Figma size={14} /> View Figma File</a>
+                  ) : (
+                    <span className="inline-flex items-center gap-2 border border-dashed border-zinc-300 rounded-full px-4 py-2 text-xs font-semibold text-zinc-500"><Figma size={14} /> View Figma File — TODO</span>
+                  )}
+                </div>
+                {/* TODO: replace these placeholders with exported frames from the WorkFlow Figma file. */}
+                <div className="grid sm:grid-cols-3 gap-4">
+                  {["Dashboard overview", "Project timeline", "Task handoff flow"].map((frame) => (
+                    <div key={frame} className="aspect-[4/3] rounded-2xl border border-dashed border-zinc-300 bg-zinc-50 flex items-center justify-center p-6 text-center text-sm text-zinc-500">TODO: add Figma frame — {frame}</div>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {/* Development & Architecture */}
             <div className="border-t border-zinc-100 pt-12">
-              <h2 className="text-black font-extrabold text-2xl sm:text-3xl mb-6 tracking-tight">6. Development & System Architecture</h2>
+              <h2 className="text-black font-extrabold text-2xl sm:text-3xl mb-6 tracking-tight">Implementation</h2>
               <p className="text-zinc-500 font-medium text-base sm:text-lg leading-relaxed mb-8">
                 {project.development.architecture}
               </p>
@@ -206,7 +235,7 @@ export default function ProjectCaseStudy() {
 
             {/* Technical Challenges */}
             <div className="border-t border-zinc-100 pt-12">
-              <h2 className="text-black font-extrabold text-2xl sm:text-3xl mb-6 tracking-tight">7. Debugging & Engineering Hurdles</h2>
+              <h2 className="text-black font-extrabold text-2xl sm:text-3xl mb-6 tracking-tight">Challenges</h2>
               <div className="space-y-6">
                 {project.development.challenges.map((chal, idx) => (
                   <div key={idx} className="bg-zinc-50/40 border border-zinc-200 rounded-2xl p-6 sm:p-8">
@@ -222,7 +251,7 @@ export default function ProjectCaseStudy() {
             {/* Learnings & Future */}
             <div className="border-t border-zinc-100 pt-12 grid sm:grid-cols-2 gap-8">
               <div>
-                <h3 className="text-black font-extrabold text-xl mb-4 tracking-tight">Key Takeaways</h3>
+                <h3 className="text-black font-extrabold text-xl mb-4 tracking-tight">Outcome and learnings</h3>
                 <ul className="space-y-2.5 pl-0 list-none text-zinc-500 text-sm leading-relaxed font-semibold">
                   {project.learnings.map((learn, idx) => (
                     <li key={idx} className="flex gap-2 items-start">

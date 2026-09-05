@@ -9,18 +9,18 @@ export default function WorkflowSection() {
   const principles = [
     {
       num: "01",
-      title: "Design is a clarity problem",
-      text: "Every interface has one job: make the next step obvious. If a user needs to think, something in the design is doing extra work it shouldn't."
+      title: "Make the next step clear",
+      text: "I use clear hierarchy, labels, and feedback so people can understand what to do next."
     },
     {
       num: "02",
-      title: "Context shapes every decision",
-      text: "A solution that works on a desktop in a quiet office fails on a phone at a bus stop. Good design anticipates the environment it will live in."
+      title: "Design for the real context",
+      text: "I consider the device, environment, connectivity, and constraints people work with."
     },
     {
       num: "03",
-      title: "Ship to learn, not to finish",
-      text: "Perfection in isolation is a trap. Putting work in front of real people early and often is the only way to build something that actually works."
+      title: "Test and improve",
+      text: "I share work early, gather feedback, and refine it based on what I learn."
     }
   ];
 
@@ -36,7 +36,7 @@ export default function WorkflowSection() {
           className="flex items-center gap-2 mb-16 text-left"
         >
           <span className="w-6 h-px bg-zinc-400 dark:bg-zinc-650" />
-          <span className="text-zinc-550 dark:text-zinc-400 text-xs tracking-[3px] uppercase font-semibold">MY WORK FLOW</span>
+          <span className="text-zinc-550 dark:text-zinc-400 text-xs tracking-[3px] uppercase font-semibold">Approach</span>
         </motion.div>
 
         {/* Big headline */}
@@ -46,7 +46,7 @@ export default function WorkflowSection() {
           transition={{ duration: 0.6 }}
           className="text-black dark:text-white font-bold text-2xl sm:text-3xl md:text-4xl tracking-tight mb-16 max-w-4xl text-left leading-tight"
         >
-          Three design principles I don&apos;t compromise on.
+          How I approach product and interface work.
         </motion.h2>
 
         {/* 3 Principles Cards Stack */}

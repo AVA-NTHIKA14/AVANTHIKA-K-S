@@ -39,7 +39,7 @@ export default function ResumePage() {
             <span>•</span>
             <a href={`mailto:${PORTFOLIO_DATA.contact.email}`} className="hover:underline">{PORTFOLIO_DATA.contact.email}</a>
             <span>•</span>
-            <a href={PORTFOLIO_DATA.contact.linkedin} target="_blank" rel="noopener noreferrer" className="hover:underline">linkedin.com/in/AVANTHIKA</a>
+            <a href={PORTFOLIO_DATA.contact.linkedin} target="_blank" rel="noopener noreferrer" className="hover:underline">linkedin.com/in/avanthika-ks</a>
             <span>•</span>
             <a href={PORTFOLIO_DATA.contact.github} target="_blank" rel="noopener noreferrer" className="hover:underline">github.com/AVA-NTHIKA14</a>
           </div>

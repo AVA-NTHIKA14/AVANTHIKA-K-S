@@ -52,7 +52,7 @@ export default function ContactSection() {
           transition={{ duration: 0.6 }}
           className="font-bold text-black dark:text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl tracking-tight mb-16 text-left leading-tight"
         >
-          Let&apos;s build something Humanity Needs.
+          Get in Touch.
         </motion.h2>
 
         {/* Two-Column Grid */}
@@ -108,7 +108,7 @@ export default function ContactSection() {
               </div>
               <div>
                 <span className="text-xs text-zinc-500 dark:text-zinc-455 font-bold uppercase tracking-wider block">LinkedIn</span>
-                <span className="text-black dark:text-white text-sm font-semibold mt-1 block group-hover:underline">linkedin.com/in/AVANTHIKA</span>
+                <span className="text-black dark:text-white text-sm font-semibold mt-1 block group-hover:underline">linkedin.com/in/avanthika-ks</span>
               </div>
             </a>
 

@@ -1,3 +1,5 @@
+export type ProjectRole = "builder" | "designer" | "maker";
+
 export interface CaseStudy {
   slug: string;
   title: string;
@@ -5,10 +7,15 @@ export interface CaseStudy {
   tagline: string;
   featured: boolean;
   category: string;
-  role: string;
+  /** Primary portfolio classification. LSG Track intentionally spans two roles. */
+  role: ProjectRole[];
+  contributionRole: string;
+  origin?: "hackathon";
   period: string;
   techStack: string[];
   liveUrl?: string;
+  /** TODO: add the published Figma URL for design-only case studies. */
+  figmaUrl?: string;
   githubUrl: string;
   overview: string;
   problem: string;
@@ -77,7 +84,12 @@ export const PORTFOLIO_DATA: {
 } = {
   name: "Avanthika K S",
   headline: "Designing thoughtful digital experiences and bringing them to life through code.",
-  subHeadline: "Junior Product Designer | GHCI'25 AIP Scholar | ECE Undergrad @ GEC Palakkad",
+  // Headline options for review:
+  // 1. Product Designer & Full-Stack Builder
+  // 2. Builder, Designer, and Maker of useful digital products
+  // 3. Designing and building accessible digital products
+  // TODO: choose a headline option. The neutral identity line remains visible until then.
+  subHeadline: "Builder / Designer / Maker | GHCI'25 AIP Scholar | ECE Undergrad @ GEC Palakkad",
   bio: [
     "I am an Electronics and Communication Engineering student at Government Engineering College Palakkad who enjoys both designing and building digital products.",
     "I refuse to be boxed in as only a UI/UX Designer or only a Frontend Developer. My identity bridges these fields: I am a builder who enjoys understanding user constraints, designing minimal layouts, and writing clean, type-safe code to implement them.",
@@ -90,6 +102,7 @@ export const PORTFOLIO_DATA: {
     { name: "Develop", description: "Translating wireframes into performant, clean, and accessible code." },
     { name: "Iterate", description: "Reviewing usability audits, fixing code warnings, and polishing details." }
   ],
+  // TODO: add `liveUrl` to a project only when a hosted demo is available.
   projects: [
     {
       slug: "lsg-track",
@@ -98,7 +111,9 @@ export const PORTFOLIO_DATA: {
       tagline: "Digitalizing Grama Panchayat building license verification and compliance management.",
       featured: true,
       category: "Web App / GIS / e-Governance",
-      role: "Full-Stack Developer & Designer",
+      role: ["builder", "designer"],
+      contributionRole: "Full-Stack Developer & Designer",
+      origin: "hackathon",
       period: "Feb 2026 - Present",
       techStack: ["React", "TypeScript", "Tailwind CSS", "Leaflet Maps", "Firebase Auth", "Firestore", "Firebase Functions"],
       githubUrl: "https://github.com/AVA-NTHIKA14/LSG-Track",
@@ -110,7 +125,7 @@ export const PORTFOLIO_DATA: {
         "Automate renewal workflows and notification alerts."
       ],
       research: {
-        methodology: "Interrogated local municipal workflows, data entry operators, and field inspectors on their regional license tracking guidelines.",
+        methodology: "I spoke with local municipal staff, data-entry operators, and field inspectors to understand their license-tracking process.",
         insights: [
           "Low-connectivity rural sectors require local browser cache synchronization for on-site surveys.",
           "Simple, mobile-friendly forms are necessary for inspectors conducting field compliance reviews."
@@ -154,7 +169,9 @@ export const PORTFOLIO_DATA: {
       tagline: "Connecting regional daily wage workers and clients on a single interactive map.",
       featured: true,
       category: "Web Application / Location Services",
-      role: "Full-Stack Developer & UI Designer",
+      role: ["builder"],
+      contributionRole: "Full-Stack Developer & UI Designer",
+      origin: "hackathon",
       period: "Dec 2025 - Jan 2026",
       techStack: ["Next.js", "TypeScript", "Tailwind CSS", "Supabase", "Gemini API", "Leaflet"],
       githubUrl: "https://github.com/AVA-NTHIKA14/PanikkarUndo",
@@ -210,7 +227,9 @@ export const PORTFOLIO_DATA: {
       tagline: "A conversational mental wellness companion that listens and matches your emotional state.",
       featured: false,
       category: "AI Chat / Web Application",
-      role: "LLM Engineer & Frontend Builder",
+      role: ["builder"],
+      contributionRole: "LLM Engineer & Frontend Builder",
+      origin: "hackathon",
       period: "Oct 2025 - Nov 2025",
       techStack: ["React", "JavaScript", "Groq API", "Llama 3", "Supabase Auth", "Tailwind CSS"],
       githubUrl: "https://github.com/AVA-NTHIKA14/Changayi",
@@ -266,7 +285,9 @@ export const PORTFOLIO_DATA: {
       tagline: "Scanning text fields for ableism, ageism, and bias using Google Gemini AI.",
       featured: false,
       category: "Chrome Extension / AI Audit",
-      role: "Chrome Extension & LLM Developer",
+      role: ["builder"],
+      contributionRole: "Chrome Extension & LLM Developer",
+      origin: "hackathon",
       period: "Nov 2025 - Dec 2025",
       techStack: ["React", "TypeScript", "Tailwind CSS", "Google Gemini API", "Chrome Extension APIs"],
       githubUrl: "https://github.com/AVA-NTHIKA14/ALTaware",
@@ -322,11 +343,14 @@ export const PORTFOLIO_DATA: {
       tagline: "A design prototype for task automation and workspace tracking inside remote agencies.",
       featured: false,
       category: "UI UX Research / Figma Prototyping",
-      role: "Lead Product Designer",
+      role: ["designer"],
+      contributionRole: "Lead Product Designer",
+      origin: "hackathon",
       period: "Aug 2025 - Sep 2025",
       techStack: ["Figma Prototyping", "User Research", "Wireframing", "Usability Audits"],
       githubUrl: "https://github.com/AVA-NTHIKA14/Portfolio",
-      overview: "An agency workspace prototype analyzing workflow bottlenecks, organizing project handoffs, and managing task automation through visual, interactive timelines.",
+      // TODO: add `figmaUrl` once the file is ready to share.
+      overview: "I designed an agency workspace prototype to help teams track handoffs, milestones, and task automation in one place.",
       problem: "Teams lose track of project handoffs and milestones across scattered dashboards, causing communication bottlenecks and project delays.",
       goals: [
         "Formulate a unified project dashboard visual design system.",
@@ -334,17 +358,17 @@ export const PORTFOLIO_DATA: {
         "Build interactive high-fidelity Figma prototypes."
       ],
       research: {
-        methodology: "Interviewed remote designers, developer leads, and project managers on their primary scheduling difficulties.",
+        methodology: "I interviewed remote designers, developer leads, and project managers about scheduling and handoff challenges.",
         insights: [
           "Users want visual calendar grids showing clear tasks dependencies.",
           "Simple drag-and-drop mechanics reduce administrative fatigue."
         ]
       },
       design: {
-        process: "Designed a clean visual system utilizing 1px borders, subtle card glows, and clear typography hierarchy.",
-        wireframes: "Sketched splitscreen dashboard structures: navigation lists on the left, active timelines on the right.",
-        iterations: "Simplified navigation items to clean layout headers to optimize visual clarity.",
-        finalUI: "Editorial layout with high-contrast borders and spacious text blocks."
+        process: "I created a visual system with clear hierarchy, restrained borders, and reusable components for the workspace.",
+        wireframes: "I sketched dashboard layouts with navigation on the left and active timelines on the right.",
+        iterations: "I simplified the navigation and headings after reviewing the early layouts for clarity.",
+        finalUI: "The final prototype uses clear typography, high-contrast borders, and generous spacing."
       },
       development: {
         architecture: "High-fidelity interactive prototype created in Figma, mapping user flows, input triggers, and animated page transitions.",
@@ -378,7 +402,9 @@ export const PORTFOLIO_DATA: {
       tagline: "A rich-text blogging network with tags sorting and custom writer profiles.",
       featured: false,
       category: "Full-Stack Web App",
-      role: "Full-Stack Engineer & Designer",
+      role: ["builder"],
+      contributionRole: "Full-Stack Engineer & Designer",
+      origin: "hackathon",
       period: "Jun 2025 - Aug 2025",
       techStack: ["React", "Node.js", "Express", "Supabase Database", "Tailwind CSS"],
       githubUrl: "https://github.com/AVA-NTHIKA14/Quillora-Blog-App",
@@ -514,7 +540,7 @@ export const PORTFOLIO_DATA: {
   contact: {
     email: "avanthikaks1874@gmail.com",
     github: "https://github.com/AVA-NTHIKA14",
-    linkedin: "https://linkedin.com/in/AVANTHIKA",
+    linkedin: "https://linkedin.com/in/avanthika-ks",
     location: "Kozhikode, Kerala, India",
     resumeUrl: "/assets/Avanthika_Resume.pdf"
   }
