@@ -1,4 +1,10 @@
 export type ProjectRole = "builder" | "designer" | "maker";
+export type ProjectDomain =
+  | "electronics"
+  | "software"
+  | "design"
+  | "research";
+export type ProjectStatus = "completed" | "prototype" | "in-progress" | "research" | "archived";
 
 export interface CaseStudy {
   slug: string;
@@ -6,12 +12,21 @@ export interface CaseStudy {
   subtitle: string;
   tagline: string;
   featured: boolean;
+  visible: boolean;
   category: string;
+  domains: ProjectDomain[];
+  status: ProjectStatus;
   /** Primary portfolio classification. LSG Track intentionally spans two roles. */
   role: ProjectRole[];
   contributionRole: string;
+  contribution: {
+    role: string;
+    scope: "Hackathon" | "Project";
+  };
   origin?: "hackathon";
   period: string;
+  technologies: string[];
+  /** @deprecated Use technologies. Retained so existing project links and content stay compatible. */
   techStack: string[];
   liveUrl?: string;
   /** TODO: add the published Figma URL for design-only case studies. */
@@ -124,11 +139,16 @@ export const PORTFOLIO_DATA: {
       subtitle: "e-Governance Spatial Licensing System",
       tagline: "Digitalizing Grama Panchayat building license verification and compliance management.",
       featured: true,
+      visible: true,
       category: "Web App / GIS / e-Governance",
+      domains: ["electronics", "software"],
+      status: "in-progress",
       role: ["builder", "designer"],
       contributionRole: "Full-Stack Developer & Designer",
+      contribution: { role: "Full-Stack Developer & Designer", scope: "Hackathon" },
       origin: "hackathon",
       period: "Feb 2026 - Present",
+      technologies: ["React", "TypeScript", "Tailwind CSS", "Leaflet Maps", "Firebase Auth", "Firestore", "Firebase Functions"],
       techStack: ["React", "TypeScript", "Tailwind CSS", "Leaflet Maps", "Firebase Auth", "Firestore", "Firebase Functions"],
       githubUrl: "https://github.com/AVA-NTHIKA14/LSG-Track",
       overview: "I built the frontend, Firebase/Firestore data layer, and role-based access control end-to-end for an e-governance GIS platform tracking Kerala Grama Panchayat trade-license compliance.",
@@ -182,11 +202,16 @@ export const PORTFOLIO_DATA: {
       subtitle: "Location-Based Daily Wage Labor Network",
       tagline: "Connecting regional daily wage workers and clients on a single interactive map.",
       featured: true,
+      visible: true,
       category: "Web Application / Location Services",
+      domains: ["software"],
+      status: "completed",
       role: ["builder"],
       contributionRole: "Full-Stack Developer & UI Designer",
+      contribution: { role: "Full-Stack Developer & UI Designer", scope: "Hackathon" },
       origin: "hackathon",
       period: "Dec 2025 - Jan 2026",
+      technologies: ["Next.js", "TypeScript", "Tailwind CSS", "Supabase", "Gemini API", "Leaflet"],
       techStack: ["Next.js", "TypeScript", "Tailwind CSS", "Supabase", "Gemini API", "Leaflet"],
       githubUrl: "https://github.com/AVA-NTHIKA14/PanikkarUndo",
       overview: "Find Near By matches domestic workers (plumbers, electricians, painters, carpenters) with client search results based on geographic proximity, making informal labor markets more accessible.",
@@ -240,11 +265,16 @@ export const PORTFOLIO_DATA: {
       subtitle: "AI Personal Wellness Companion",
       tagline: "A conversational mental wellness companion that listens and matches your emotional state.",
       featured: false,
+      visible: true,
       category: "AI Chat / Web Application",
+      domains: ["software", "design"],
+      status: "completed",
       role: ["designer"],
       contributionRole: "UI/UX Designer & Interaction Architect",
+      contribution: { role: "UI/UX Designer & Interaction Architect", scope: "Hackathon" },
       origin: "hackathon",
       period: "Oct 2025 - Nov 2025",
+      technologies: ["React", "JavaScript", "Groq API", "Llama 3", "Supabase Auth", "Tailwind CSS"],
       techStack: ["React", "JavaScript", "Groq API", "Llama 3", "Supabase Auth", "Tailwind CSS"],
       githubUrl: "https://github.com/AVA-NTHIKA14/Changayi",
       overview: "Changayi is an empathetic conversational companion built to offer supportive wellness logs, mood tracking, and real-time stress relief chats to help users process emotions in a supportive environment.",
@@ -298,10 +328,15 @@ export const PORTFOLIO_DATA: {
       subtitle: "Digital Inclusive Language Checker",
       tagline: "A full-stack tool for real-time detection of potentially biased language in writing.",
       featured: false,
+      visible: true,
       category: "Full-Stack AI Tool",
+      domains: ["software"],
+      status: "completed",
       role: ["maker"],
       contributionRole: "Solo Full-Stack Builder",
+      contribution: { role: "Solo Full-Stack Builder", scope: "Project" },
       period: "2026",
+      technologies: ["Next.js", "TypeScript", "Fastify", "Groq LLaMA 3.3", "Firebase Auth"],
       techStack: ["Next.js", "TypeScript", "Fastify", "Groq LLaMA 3.3", "Firebase Auth"],
       githubUrl: "https://github.com/AVA-NTHIKA14/prism",
       overview: "I independently built Prism, a full-stack inclusive-language detection tool: Next.js frontend, Fastify API backend, and Groq LLaMA 3.3 for real-time semantic bias detection.",
@@ -355,11 +390,16 @@ export const PORTFOLIO_DATA: {
       subtitle: "Productivity Organization Tool",
       tagline: "A design prototype for task automation and workspace tracking inside remote agencies.",
       featured: false,
+      visible: true,
       category: "UI UX Research / Figma Prototyping",
+      domains: ["design"],
+      status: "prototype",
       role: ["designer"],
       contributionRole: "Lead Product Designer",
+      contribution: { role: "Lead Product Designer", scope: "Hackathon" },
       origin: "hackathon",
       period: "Aug 2025 - Sep 2025",
+      technologies: ["Figma Prototyping", "User Research", "Wireframing", "Usability Audits"],
       techStack: ["Figma Prototyping", "User Research", "Wireframing", "Usability Audits"],
       figmaUrl: "https://www.figma.com/design/G2iSQSGLrXMXa1vLC6vIZc/Works-by-Avanthika",
       overview: "I designed an agency workspace prototype to help teams track handoffs, milestones, and task automation in one place.",
@@ -413,11 +453,16 @@ export const PORTFOLIO_DATA: {
       subtitle: "Medium-Inspired Blogging Platform",
       tagline: "A rich-text blogging network with tags sorting and custom writer profiles.",
       featured: false,
+      visible: true,
       category: "Full-Stack Web App",
+      domains: ["software"],
+      status: "completed",
       role: ["builder"],
       contributionRole: "Full-Stack Engineer & Designer",
+      contribution: { role: "Full-Stack Engineer & Designer", scope: "Hackathon" },
       origin: "hackathon",
       period: "Jun 2025 - Aug 2025",
+      technologies: ["React", "Node.js", "Express", "Supabase Database", "Tailwind CSS"],
       techStack: ["React", "Node.js", "Express", "Supabase Database", "Tailwind CSS"],
       githubUrl: "https://github.com/AVA-NTHIKA14/Quillora-Blog-App",
       overview: "Quillora is a clean, minimal publishing network featuring a rich text markdown editor, tags categorization, and responsive reading widgets to help writers share ideas.",

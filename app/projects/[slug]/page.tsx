@@ -73,7 +73,9 @@ export default function ProjectCaseStudy() {
             </div>
             <div>
               <p className="text-zinc-400 dark:text-zinc-500 text-[10px] uppercase tracking-wider font-bold">Client / Context</p>
-              <p className="text-black dark:text-white font-extrabold text-sm sm:text-base mt-1">Hackathon Project</p>
+              <p className="text-black dark:text-white font-extrabold text-sm sm:text-base mt-1">
+                {project.contribution.scope}
+              </p>
             </div>
             <div className="flex gap-4 items-center">
               {project.liveUrl && (
@@ -284,7 +286,7 @@ export default function ProjectCaseStudy() {
                 Core Technologies
               </h4>
               <div className="flex flex-wrap gap-2">
-                {project.techStack.map((tech) => (
+                {project.technologies.map((tech) => (
                   <span
                     key={tech}
                     className="text-zinc-650 text-xs px-2.5 py-1 rounded bg-white border border-zinc-200 font-semibold"
