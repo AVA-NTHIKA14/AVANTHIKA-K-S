@@ -1,650 +1,356 @@
-export type ProjectRole = "builder" | "designer" | "maker";
-export type ProjectDomain =
-  | "electronics"
-  | "software"
-  | "design"
-  | "research";
-export type ProjectStatus = "completed" | "prototype" | "in-progress" | "research" | "archived";
+import type { PortfolioData } from "../types";
 
-export interface CaseStudy {
-  slug: string;
-  title: string;
-  subtitle: string;
-  tagline: string;
-  featured: boolean;
-  visible: boolean;
-  category: string;
-  domains: ProjectDomain[];
-  status: ProjectStatus;
-  /** Primary portfolio classification. LSG Track intentionally spans two roles. */
-  role: ProjectRole[];
-  contributionRole: string;
-  contribution: {
-    role: string;
-    scope: "Hackathon" | "Project";
-  };
-  origin?: "hackathon";
-  period: string;
-  technologies: string[];
-  /** @deprecated Use technologies. Retained so existing project links and content stay compatible. */
-  techStack: string[];
-  liveUrl?: string;
-  /** TODO: add the published Figma URL for design-only case studies. */
-  figmaUrl?: string;
-  githubUrl?: string;
-  overview: string;
-  problem: string;
-  goals: string[];
-  research: {
-    methodology: string;
-    insights: string[];
-  };
-  design: {
-    process: string;
-    wireframes: string;
-    iterations: string;
-    finalUI: string;
-  };
-  development: {
-    architecture: string;
-    techDecisions: { title: string; desc: string }[];
-    challenges: { title: string; desc: string }[];
-  };
-  keyFeatures: { title: string; desc: string }[];
-  learnings: string[];
-  futureImprovements: string[];
-  gallery?: string[];
-}
-
-export interface ExperienceItem {
-  id: number;
-  role: string;
-  company: string;
-  period: string;
-  description: string[];
-  tags: string[];
-}
-
-export interface SkillCategory {
-  title: string;
-  skills: string[];
-}
-
-export interface EducationItem {
-  institution: string;
-  degree: string;
-  period: string;
-  status: string;
-}
-
-export interface CertificationItem {
-  title: string;
-  issuer: string;
-  date: string;
-  credentialUrl?: string;
-}
-
-export interface ResumesConfig {
-  default: string;
-  versions: {
-    label: string;
-    url: string;
-  }[];
-}
-
-export interface DesignWork {
-  id: number;
-  title: string;
-  description: string;
-  figmaUrl: string;
-  thumbnail?: string;
-  category: string;
-}
-
-export const PORTFOLIO_DATA: {
-  name: string;
-  headline: string;
-  subHeadline: string;
-  bio: string[];
-  workflow: { name: string; description: string }[];
-  projects: CaseStudy[];
-  experience: ExperienceItem[];
-  skills: SkillCategory[];
-  education: EducationItem[];
-  certifications: CertificationItem[];
-  designWorks: DesignWork[];
-  resumes: ResumesConfig;
-  contact: { email: string; github: string; linkedin: string; location: string };
-} = {
+/** Public portfolio content lives here so projects can be updated without touching page components. */
+export const PORTFOLIO_DATA: PortfolioData = {
   name: "Avanthika K S",
-  headline: "Designing thoughtful digital experiences and bringing them to life through code.",
-  subHeadline: "Product Designer & Full-Stack Builder — ECE Undergrad @ GEC Palakkad",
+  headline: "Product design, grounded in ECE.",
+  subHeadline: "I am an ECE student at GEC Palakkad, working across product design and frontend development. My recent work ranges from an LSG Track portal shaped by conversations with Panchayat officials to Care-Ring, an ESP32 assistive communication prototype.",
   bio: [
-    "I am an Electronics and Communication Engineering student at Government Engineering College Palakkad who enjoys both designing and building digital products.",
-    "I refuse to be boxed in as only a UI/UX Designer or only a Frontend Developer. My identity bridges these fields: I am a builder who enjoys understanding user constraints, designing minimal layouts, and writing clean, type-safe code to implement them.",
-    "By combining analytical engineering logic from my ECE background with user research empathy, I focus on building highly accessible, intuitive, and compliant interfaces that solve real-world problems."
+    "I am a final-year Electronics and Communication Engineering student at Government Engineering College, Palakkad (KTU), focused on product design and frontend development.",
+    "My project work spans digital products and embedded prototypes. I am looking for entry-level Product Designer and Frontend or Software Intern roles, with assistive hardware as another area of interest.",
   ],
-  workflow: [
-    { name: "Research", description: "Analyzing requirements, studying user behaviors, and defining layout constraints." },
-    { name: "Design", description: "Drafting user flows, typography guidelines, and responsive layout structures." },
-    { name: "Prototype", description: "Building interactive visual mockups to refine UX interactions." },
-    { name: "Develop", description: "Translating wireframes into performant, clean, and accessible code." },
-    { name: "Iterate", description: "Reviewing usability audits, fixing code warnings, and polishing details." }
-  ],
-  // TODO: add `liveUrl` to a project only when a hosted demo is available.
   projects: [
     {
       slug: "lsg-track",
       title: "LSG Track",
-      subtitle: "e-Governance Spatial Licensing System",
-      tagline: "Digitalizing Grama Panchayat building license verification and compliance management.",
-      featured: true,
-      visible: true,
-      category: "Web App / GIS / e-Governance",
-      domains: ["electronics", "software"],
+      subtitle: "GIS licence portal for panchayat officials",
+      tagline: "Making licence records easier to review ward by ward.",
+      description: "Designed in Figma, built and deployed after speaking with village officers and the Panangad Panchayat Secretary.",
+      domains: ["design", "software"],
+      primaryDomain: "design",
       status: "in-progress",
-      role: ["builder", "designer"],
-      contributionRole: "Full-Stack Developer & Designer",
-      contribution: { role: "Full-Stack Developer & Designer", scope: "Hackathon" },
-      origin: "hackathon",
-      period: "Feb 2026 - Present",
-      technologies: ["React", "TypeScript", "Tailwind CSS", "Leaflet Maps", "Firebase Auth", "Firestore", "Firebase Functions"],
-      techStack: ["React", "TypeScript", "Tailwind CSS", "Leaflet Maps", "Firebase Auth", "Firestore", "Firebase Functions"],
-      githubUrl: "https://github.com/AVA-NTHIKA14/LSG-Track",
-      overview: "I built the frontend, Firebase/Firestore data layer, and role-based access control end-to-end for an e-governance GIS platform tracking Kerala Grama Panchayat trade-license compliance.",
-      problem: "Field officers need an accessible way to review trade-license data and prioritize inspections, including in areas with limited connectivity.",
-      goals: [
-        "Deploy an interactive Leaflet GIS map with real Kerala ward-boundary data and choropleth layers.",
-        "Enforce per-tenant, role-based data access with Firestore security rules.",
-        "Ship as an installable, bilingual (English/Malayalam) Progressive Web App."
-      ],
-      research: {
-        methodology: "I based the system on the needs of Kerala Grama Panchayats tracking trade-license compliance and field officer priorities.",
-        insights: [
-          "Field officers require ward-level geographic context to prioritize inspections.",
-          "Progressive Web App installability is essential for offline-capable field use."
-        ]
-      },
-      design: {
-        process: "I designed the map interface around ward boundaries, compliance status, and field-officer inspection priorities.",
-        wireframes: "I structured a map-led workspace that maintains both geographic context and data records in a single view.",
-        iterations: "I introduced choropleth layers and inspection-priority heatmaps to clearly communicate inspection urgency.",
-        finalUI: "The interface supports bilingual (English/Malayalam) content and installs as a Progressive Web App with automated Vitest tests."
-      },
-      development: {
-        architecture: "React + TypeScript frontend using Leaflet for GIS, Firebase/Firestore for data and auth, and role-based Firestore security rules for access control.",
-        techDecisions: [
-          { title: "Leaflet with real GeoJSON", desc: "Integrated actual Kerala ward-boundary data for choropleth visualization and inspection-priority heatmaps." },
-          { title: "CSV/Excel import with SheetJS", desc: "Built heuristic column mapping and deduplication to simplify bulk data uploads." }
-        ],
-        challenges: [
-          { title: "Tenant data isolation", desc: "Engineered Firestore security rules to enforce per-tenant, role-based data access across users and inspectors." },
-          { title: "Field offline capability", desc: "Shipped as an installable PWA with bilingual support and automated test coverage for field deployments." }
-        ]
-      },
-      keyFeatures: [
-          { title: "Interactive Leaflet GIS map", desc: "Real Kerala ward boundaries with choropleth layers and inspection-priority heatmaps for field officers." },
-          { title: "CSV/Excel import", desc: "SheetJS-based import with heuristic column mapping and deduplication." },
-          { title: "Role-based access control", desc: "Firestore security rules enforce per-tenant, role-based data isolation." }
-      ],
-      learnings: [
-        "Civic web portals require clean validation schemas and responsive navigation paths for non-technical users.",
-        "Local data caching is crucial for applications intended for on-site inspections."
-      ],
-      futureImprovements: [
-        "Integrate local payment gateways for digital license renewals.",
-        "Implement document scanner OCR to auto-read license details."
-      ]
-    },
-    {
-      slug: "find-nearby",
-      title: "Find Near By",
-      subtitle: "Location-Based Daily Wage Labor Network",
-      tagline: "Connecting regional daily wage workers and clients on a single interactive map.",
+      contribution: "Product design and full-stack development",
+      technologyStack: ["Figma", "React", "TypeScript", "Firebase", "Leaflet", "OpenStreetMap"],
       featured: true,
-      visible: true,
-      category: "Web Application / Location Services",
-      domains: ["software"],
-      status: "completed",
-      role: ["builder"],
-      contributionRole: "Full-Stack Developer & UI Designer",
-      contribution: { role: "Full-Stack Developer & UI Designer", scope: "Hackathon" },
-      origin: "hackathon",
-      period: "Dec 2025 - Jan 2026",
-      technologies: ["Next.js", "TypeScript", "Tailwind CSS", "Supabase", "Gemini API", "Leaflet"],
-      techStack: ["Next.js", "TypeScript", "Tailwind CSS", "Supabase", "Gemini API", "Leaflet"],
-      githubUrl: "https://github.com/AVA-NTHIKA14/PanikkarUndo",
-      overview: "Find Near By matches domestic workers (plumbers, electricians, painters, carpenters) with client search results based on geographic proximity, making informal labor markets more accessible.",
-      problem: "Local laborers lack digital platforms to advertise their services, while clients rely on fragmented networks to find urgent household service technicians.",
-      goals: [
-        "Create a search interface that maps and filters certified local workers.",
-        "Integrate simple direct phone dialing actions on profile cards.",
-        "Support rapid account setup for non-technical laborers."
+      visibility: "public",
+      projectType: "community",
+      githubUrl: "https://github.com/AVA-NTHIKA14/LSG-Track.git",
+      liveUrl: "https://sst-green.vercel.app/",
+      screenshots: [
+        {
+          src: "/images/projects/lsg-track/lsg-track-desktop.webp",
+          alt: "LSG Track Panchayat selection screen on desktop",
+          viewport: "desktop",
+        },
+        {
+          src: "/images/projects/lsg-track/lsg-track-mobile.webp",
+          alt: "LSG Track Panchayat selection screen on mobile",
+          viewport: "mobile",
+        },
+      ],
+      problem: "Licence data was kept in Excel and was hard to read ward by ward.",
+      process: "Spoke with village officers and the Panangad Panchayat Secretary, designed in Figma, then built and deployed the portal.",
+      team: "Team details not supplied.",
+      whatIBuilt: "A GIS licence portal for panchayat officials, designed in Figma, then built and deployed.",
+      outcome: "The Panangad Panchayat Secretary tested the portal and gave feedback. Formal government approval is pending.",
+      objectives: [
+        "Connect business records to geographical views.",
+        "Explore K-SMART CSV and Excel data import.",
+        "Support licensing administration and field workflows.",
       ],
       research: {
-        methodology: "Interviewed local service technicians and regional homeowners to understand their scheduling and contact discovery struggles.",
+        methodology:
+          "The project brief describes existing licensing workflows and the need to connect records with maps. Formal interviews or user studies are not documented in this portfolio workspace.",
         insights: [
-          "Laborers prefer simple visual profiles showing only name, phone number, and primary skill tag.",
-          "Homeowners need immediate distance calculations to match closest technicians."
-        ]
+          "Location accuracy and record completeness affect the usefulness of map views.",
+          "Field interfaces need to fit existing institutional workflows.",
+        ],
       },
       design: {
-        process: "Formulated a minimal interface emphasizing card visibility. Spaced elements cleanly and mapped navigation buttons for quick accessibility.",
-        wireframes: "Mocked visual templates separating: search filter tabs, interactive map results, and worker list cards.",
-        iterations: "Shifted card links to open direct mobile dialing paths to simplify connection friction for users.",
-        finalUI: "Clean white grid layout with high-contrast text and interactive coordinates maps."
+        process: "The portal is organized around business records, map exploration and inspection work.",
+        artifacts: "No source design files or screenshots are included in this portfolio workspace.",
+        outcome: "A live application link is available for review; its current features should be verified in the application.",
       },
       development: {
-        architecture: "Next.js App Router workspace querying a Supabase backend database, using location queries to filter results.",
-        techDecisions: [
-          { title: "Supabase Location Indexing", desc: "Leveraged database queries to search and return technicians matching geographic radius parameters." },
-          { title: "Direct Contact Triggers", desc: "Integrated standard dial anchors to instantly prompt calls on mobile browsers." }
+        architecture: "The project is described as a React and TypeScript application using Firebase and Leaflet with OpenStreetMap.",
+        decisions: [
+          { title: "Map layer", description: "Leaflet and OpenStreetMap are used for geographical views." },
+          { title: "Existing records", description: "K-SMART CSV and Excel import is part of the described workflow." },
         ],
-        challenges: [
-          { title: "Coordinates Filtering Latency", desc: "Initial queries timed out during broad radius searches. Resolved by caching regional worker counts." },
-          { title: "Laborer Profile Verification", desc: "Implemented simple verification tags to protect clients from uncertified worker profiles." }
-        ]
       },
-      keyFeatures: [
-        { title: "Distance Filtering Search", desc: "Calculates distance coordinates to sort available workers by proximity." },
-        { title: "One-Click Dial Action", desc: "Dial keys on profile cards to trigger phone calls without copy-pasting numbers." },
-        { title: "Worker Registration Dashboard", desc: "A simple form interface letting workers create profiles and list skills." }
+      implementationEvidence: [
+        "Repository and live application links are provided. This portfolio workspace does not contain the application source for an implementation audit.",
+      ],
+      challenges: [
+        { title: "Data quality", description: "Record completeness and location accuracy influence map reliability." },
+        { title: "Workflow fit", description: "The portal needs to accommodate existing licensing and inspection practices." },
       ],
       learnings: [
-        "Product designs for local communities succeed when interface barriers are minimized to single-click actions.",
-        "Database coordinates querying requires robust indexes to maintain rapid response speeds."
+        "GIS can connect administrative records with useful geographical context.",
+        "Institutional software needs to account for established workflows.",
       ],
       futureImprovements: [
-        "Add client review ratings and booking logs for worker profiles.",
-        "Support regional language translations to enhance local accessibility."
-      ]
+        "Verify renewal notifications, revenue calculations, geo-fence audits and notice generation against the current implementation.",
+        "Improve record synchronization and location validation.",
+      ],
     },
     {
-      slug: "changayi",
-      title: "Changayi",
-      subtitle: "AI Personal Wellness Companion",
-      tagline: "A conversational mental wellness companion that listens and matches your emotional state.",
-      featured: false,
-      visible: true,
-      category: "AI Chat / Web Application",
-      domains: ["software", "design"],
-      status: "completed",
-      role: ["designer"],
-      contributionRole: "UI/UX Designer & Interaction Architect",
-      contribution: { role: "UI/UX Designer & Interaction Architect", scope: "Hackathon" },
-      origin: "hackathon",
-      period: "Oct 2025 - Nov 2025",
-      technologies: ["React", "JavaScript", "Groq API", "Llama 3", "Supabase Auth", "Tailwind CSS"],
-      techStack: ["React", "JavaScript", "Groq API", "Llama 3", "Supabase Auth", "Tailwind CSS"],
-      githubUrl: "https://github.com/AVA-NTHIKA14/Changayi",
-      overview: "Changayi is an empathetic conversational companion built to offer supportive wellness logs, mood tracking, and real-time stress relief chats to help users process emotions in a supportive environment.",
-      problem: "Traditional mental health applications often rely on rigid, multiple-choice tracking forms rather than natural conversational expression, making them feel impersonal.",
-      goals: [
-        "Build a natural conversation chat container interface.",
-        "Implement mood logging schemas matching user inputs.",
-        "Secure conversation records using encrypted database sessions."
-      ],
-      research: {
-        methodology: "Interviewed students on their mental health habits, finding that users seek private, low-pressure outlets to vent without judgment.",
-        insights: [
-          "Conversational interfaces feel more personal than clinical forms.",
-          "Visual indicators (like mood color charts) help users reflect on their progress over time."
-        ]
-      },
-      design: {
-        process: "Designed a clean, light-themed chat view with soft zinc border dividers. Emphasized spacious text blocks and clear messaging buttons.",
-        wireframes: "Mocked side-by-side structures: active chat console on the right, history logs and mood calendars on the left.",
-        iterations: "Swapped dynamic animations for static transition layers to secure smooth rendering on low-power devices.",
-        finalUI: "Editorial layout with clean text boxes, minimalist profile indicators, and subtle user controls."
-      },
-      development: {
-        architecture: "React frontend querying Llama 3 models via Groq API. Messages are validated and stored inside a Supabase database.",
-        techDecisions: [
-          { title: "Empathetic Prompt Engineering", desc: "Configured system prompts to guide model responses toward supportive, active listening behavior." },
-          { title: "Supabase Session Enforcements", desc: "Isolated user conversations securely so that data is private and encrypted." }
-        ],
-        challenges: [
-          { title: "Chat Bubble Reflows", desc: "Typing animations caused visual screen jumps. Resolved by calculating text heights before rendering." },
-          { title: "Model Validation Failures", desc: "API limits triggered error states. Configured fallback responses to ensure uninterrupted service." }
-        ]
-      },
-      keyFeatures: [
-        { title: "Conversational Interface", desc: "Chat system designed for low-pressure venting and support." },
-        { title: "Mood Tracking Dashboard", desc: "Analyzes message tone to plot mood progress on weekly charts." },
-        { title: "Wellness Cards", desc: "Suggests breathing and writing exercises based on emotional states." }
-      ],
-      learnings: [
-        "AI applications in health require rigorous guardrails and clear safety disclaimers.",
-        "Minimizing interface noise helps users focus on writing and reflection."
-      ],
-      futureImprovements: [
-        "Add locally encrypted offline text logs for offline journaling.",
-        "Develop voice chat integration for hands-free conversations."
-      ]
-    },
-    {
-      slug: "prism",
-      title: "Prism",
-      subtitle: "Digital Inclusive Language Checker",
-      tagline: "A full-stack tool for real-time detection of potentially biased language in writing.",
-      featured: false,
-      visible: true,
-      category: "Full-Stack AI Tool",
-      domains: ["software"],
-      status: "completed",
-      role: ["maker"],
-      contributionRole: "Solo Full-Stack Builder",
-      contribution: { role: "Solo Full-Stack Builder", scope: "Project" },
-      period: "2026",
-      technologies: ["Next.js", "TypeScript", "Fastify", "Groq LLaMA 3.3", "Firebase Auth"],
-      techStack: ["Next.js", "TypeScript", "Fastify", "Groq LLaMA 3.3", "Firebase Auth"],
-      githubUrl: "https://github.com/AVA-NTHIKA14/prism",
-      overview: "I independently built Prism, a full-stack inclusive-language detection tool: Next.js frontend, Fastify API backend, and Groq LLaMA 3.3 for real-time semantic bias detection.",
-      problem: "Writers need reliable feedback on biased language that combines semantic context understanding with a dependable lexical safety net.",
-      goals: [
-        "Analyze language in real time using Groq's LLaMA 3.3 model for semantic bias detection.",
-        "Merge LLM-based semantic analysis with a deterministic lexical safety net.",
-        "Validate and deduplicate results through a custom decision engine before presentation."
-      ],
-      research: {
-        methodology: "I designed a dual-layer detection pipeline merging semantic context analysis with deterministic lexical matching.",
-        insights: [
-          "LLM outputs require deterministic validation before reaching the user interface.",
-          "A lexical safety net catches bias terms that semantic analysis may miss due to model variance."
-        ]
-      },
-      design: {
-        process: "I designed the interface to clearly surface flagged language and suggest alternatives while maintaining readability.",
-        wireframes: "I planned the writing flow to keep analysis results visually connected to source text.",
-        iterations: "I refined the decision engine to reliably validate and deduplicate results across detection layers.",
-        finalUI: "The interface connects seamlessly to a structured Fastify API for responsive real-time analysis."
-      },
-      development: {
-        architecture: "Monorepo structure with web, api, core-detector, and core-client packages. Firebase Auth for user management, unit tests for validation.",
-        techDecisions: [
-          { title: "Dual-layer detection pipeline", desc: "Merges LLM-based semantic analysis (Groq LLaMA 3.3) with a deterministic lexical safety net." },
-          { title: "Monorepo with clear ownership", desc: "Separated web frontend, Fastify API, detector logic, and shared client utilities for maintainability." }
-        ],
-        challenges: [
-          { title: "Result deduplication and validation", desc: "Built a custom decision engine to validate and deduplicate results across semantic and lexical detection sources." },
-          { title: "Real-time API performance", desc: "Integrated Groq's LLaMA 3.3 with Fastify for responsive analysis without blocking the UI." }
-        ]
-      },
-      keyFeatures: [
-          { title: "Semantic bias detection", desc: "LLaMA 3.3 analyzes language in context for nuanced bias detection." },
-          { title: "Lexical safety net", desc: "Deterministic checks catch common bias terms missed by semantic analysis." },
-          { title: "Validated results", desc: "Custom decision engine deduplicates and validates findings before display." }
-      ],
-      learnings: [
-        "Prompt engineering requires robust validation checks to handle API variance.",
-        "UI tools succeed when they educate users, building long-term inclusive writing habits."
-      ],
-      futureImprovements: [
-        "Support customized style guides for company branding rules.",
-        "Integrate with text-to-speech tools to support visually impaired users."
-      ]
-    },
-    {
-      slug: "workflow",
-      title: "WorkFlow",
-      subtitle: "Productivity Organization Tool",
-      tagline: "A design prototype for task automation and workspace tracking inside remote agencies.",
-      featured: false,
-      visible: true,
-      category: "UI UX Research / Figma Prototyping",
-      domains: ["design"],
+      slug: "carering",
+      title: "Care-Ring",
+      subtitle: "Wearable assistive communication prototype",
+      tagline: "An assistive communication prototype using touch patterns and caregiver alerts.",
+      description: "A working ESP32 prototype built at a hackathon and adapted from the open-source esp32-patient-call project.",
+      domains: ["electronics"],
+      primaryDomain: "electronics",
       status: "prototype",
-      role: ["designer"],
-      contributionRole: "Lead Product Designer",
-      contribution: { role: "Lead Product Designer", scope: "Hackathon" },
-      origin: "hackathon",
-      period: "Aug 2025 - Sep 2025",
-      technologies: ["Figma Prototyping", "User Research", "Wireframing", "Usability Audits"],
-      techStack: ["Figma Prototyping", "User Research", "Wireframing", "Usability Audits"],
-      figmaUrl: "https://www.figma.com/design/G2iSQSGLrXMXa1vLC6vIZc/Works-by-Avanthika",
-      overview: "I designed an agency workspace prototype to help teams track handoffs, milestones, and task automation in one place.",
-      problem: "Teams lose track of project handoffs and milestones across scattered dashboards, causing communication bottlenecks and project delays.",
-      goals: [
-        "Formulate a unified project dashboard visual design system.",
-        "Conduct user research to identify main interface pain points.",
-        "Build interactive high-fidelity Figma prototypes."
+      contribution: "Prototype development",
+      technologyStack: ["ESP32", "Touch patterns", "OLED", "Wi-Fi", "Email alerts"],
+      featured: true,
+      visibility: "public",
+      projectType: "hackathon",
+      problem: "The prototype explores touch-based communication to send a caregiver a request.",
+      process: "Built at a hackathon and adapted from the open-source esp32-patient-call project.",
+      team: "Team details not supplied.",
+      whatIBuilt: "An ESP32 touch ring that recognizes touch patterns, provides OLED feedback and sends Wi-Fi email alerts to a caregiver.",
+      outcome: "A working prototype. It is not a medical device and has not been tested with real users.",
+      objectives: [
+        "Explore four touch patterns for predefined requests.",
+        "Explore ESP32 input processing and OLED feedback.",
+        "Consider Wi-Fi caregiver notifications and a wearable enclosure.",
       ],
       research: {
-        methodology: "I interviewed remote designers, developer leads, and project managers about scheduling and handoff challenges.",
+        methodology:
+          "The project frames a communication gap between people with severe physical limitations and caregivers. Clinical study and real-user testing are not documented.",
         insights: [
-          "Users want visual calendar grids showing clear tasks dependencies.",
-          "Simple drag-and-drop mechanics reduce administrative fatigue."
-        ]
+          "Input timing and accidental touches need careful handling.",
+          "Emergency requests need a clear priority in the notification flow.",
+        ],
       },
       design: {
-        process: "I created a visual system with clear hierarchy, restrained borders, and reusable components for the workspace.",
-        wireframes: "I sketched dashboard layouts with navigation on the left and active timelines on the right.",
-        iterations: "I simplified the navigation and headings after reviewing the early layouts for clarity.",
-        finalUI: "The final prototype uses clear typography, high-contrast borders, and generous spacing."
+        process: "The concept maps touch patterns to a small set of essential requests.",
+        artifacts: "A hardware interaction concept combines touch input, local display feedback and wireless communication.",
+        outcome: "The prototype concept describes single, double and triple taps plus a long press; usability is not clinically validated.",
       },
       development: {
-        architecture: "High-fidelity interactive prototype created in Figma, mapping user flows, input triggers, and animated page transitions.",
-        techDecisions: [
-          { title: "Design Component Libraries", desc: "Built reusable Figma component cards, inputs, and button sets to keep visuals consistent." },
-          { title: "Interactive Flow Mapping", desc: "Connected multiple prototype screens to simulate real task drag-and-drop operations." }
+        architecture: "The described concept connects touch input, ESP32 gesture recognition, OLED feedback and a Wi-Fi notification flow.",
+        decisions: [
+          { title: "Touch input", description: "Capacitive touch patterns represent predefined requests." },
+          { title: "Local feedback", description: "An OLED is included to acknowledge interaction." },
         ],
-        challenges: [
-          { title: "Visual Noise Reduction", desc: "Timeline cards originally cluttered the dashboard. Resolved by introducing collapsible category lists." },
-          { title: "User Navigation Friction", desc: "Refined sidebar layouts based on feedback to ensure pages load within two clicks." }
-        ]
       },
-      keyFeatures: [
-        { title: "Visual Project Timelines", desc: "Interactive timelines displaying task progressions and dependencies." },
-        { title: "Workspace Automation", desc: "Simulates automated status shifts upon project completion." },
-        { title: "Clean Visual Design System", desc: "A sleek black, white, and grey style guide for dashboard elements." }
+      implementationEvidence: [
+        "The available portfolio content describes a prototype. Firmware, hardware records and user testing are not included here for verification.",
+      ],
+      challenges: [
+        { title: "Gesture recognition", description: "Timing thresholds and input validation are needed to distinguish taps and long presses." },
+        { title: "Wearable reliability", description: "Comfort, accidental input, cooldown and notification delivery remain considerations." },
       ],
       learnings: [
-        "Visual quality relies on consistent grid alignment and spacing rather than heavy graphics.",
-        "Interactive prototypes are crucial for uncovering usability flaws before coding starts."
+        "Hardware and software need to work together for dependable interaction.",
+        "Feedback matters in minimal-input interfaces.",
       ],
       futureImprovements: [
-        "Translate Figma guidelines into React component library code.",
-        "Add light/dark mode variations to the visual design system."
-      ]
+        "Validate gesture timing and notification reliability with appropriate supervised research.",
+        "Improve wearable comfort and emergency alert handling.",
+      ],
     },
     {
-      slug: "quillora",
-      title: "Quillora",
-      subtitle: "Medium-Inspired Blogging Platform",
-      tagline: "A rich-text blogging network with tags sorting and custom writer profiles.",
-      featured: false,
-      visible: true,
-      category: "Full-Stack Web App",
-      domains: ["software"],
-      status: "completed",
-      role: ["builder"],
-      contributionRole: "Full-Stack Engineer & Designer",
-      contribution: { role: "Full-Stack Engineer & Designer", scope: "Hackathon" },
-      origin: "hackathon",
-      period: "Jun 2025 - Aug 2025",
-      technologies: ["React", "Node.js", "Express", "Supabase Database", "Tailwind CSS"],
-      techStack: ["React", "Node.js", "Express", "Supabase Database", "Tailwind CSS"],
-      githubUrl: "https://github.com/AVA-NTHIKA14/Quillora-Blog-App",
-      overview: "Quillora is a clean, minimal publishing network featuring a rich text markdown editor, tags categorization, and responsive reading widgets to help writers share ideas.",
-      problem: "Writers want simple, clean interfaces to share their thoughts without dealing with distracting ads or complex subscription interfaces.",
-      goals: [
-        "Create a minimal editor supporting markdown format inputs.",
-        "Build a catalog index allowing users to sort posts by tags.",
-        "Implement writer profile pages displaying written articles."
+      slug: "adaptive-windshield-wiper",
+      title: "Adaptive Windshield Wiper",
+      subtitle: "Rain-sensor wiper control",
+      tagline: "A B.Tech mini project with automatic speed control and manual override.",
+      description: "An open-loop windshield wiper controller built by a team of three.",
+      domains: ["electronics"],
+      primaryDomain: "electronics",
+      status: "prototype",
+      contribution: "B.Tech mini project; team of three; individual responsibilities not supplied",
+      technologyStack: ["ESP32", "Rain sensor", "BTS7960", "PWM", "Manual override"],
+      featured: true,
+      visibility: "public",
+      projectType: "academic",
+      problem: "The project explores adjusting wiper speed based on rain-sensor input.",
+      team: "Team of three.",
+      whatIBuilt: "An open-loop system using an ESP32, rain sensor, BTS7960 driver, PWM speed control and manual override.",
+      outcome: "Build outcome and evaluation details were not supplied.",
+      futureImprovements: ["Validate sensor response and speed control under varied rain and driving conditions."],
+    },
+    {
+      slug: "roadsense",
+      title: "RoadSense",
+      subtitle: "Crowd-sourced road hazard exploration",
+      tagline: "Exploring smartphone sensors and maps to identify and visualize potential road hazards.",
+      description:
+        "A mobile project exploring how accelerometer, gyroscope and GPS readings could support road hazard reporting.",
+      domains: ["software", "research"],
+      primaryDomain: "research",
+      status: "in-progress",
+      contribution: "B.Tech major project; individual responsibilities not supplied",
+      technologyStack: ["Flutter", "Smartphone sensors"],
+      featured: true,
+      visibility: "public",
+      projectType: "research",
+      githubUrl: "https://github.com/AVA-NTHIKA14/Main-Project",
+      problem: "Project exploring crowdsourced road hazard reporting.",
+      team: "Team details not supplied.",
+      whatIBuilt: "Major project in progress using Flutter and smartphone sensors for crowdsourced hazard reporting.",
+      outcome: "Not yet validated.",
+      objectives: [
+        "Explore sensor readings and associate motion events with GPS locations.",
+        "Consider a processing pipeline that accounts for timing, orientation and noise.",
+        "Explore a map-first mobile experience for viewing and reporting hazards.",
       ],
       research: {
-        methodology: "Studied layouts of blogging sites like Medium and Substack, analyzing post spacing, font choices, and reading experiences.",
+        methodology:
+          "The project explores smartphone sensor fusion and candidate classification approaches. No labelled dataset, model evaluation or detection metrics are documented here.",
         insights: [
-          "Spacious font layouts and clear line heights improve reading comfort.",
-          "Simple tag filters help readers discover related topics quickly."
-        ]
+          "Vehicle speed and phone placement can change sensor readings.",
+          "Braking and turning can resemble road impacts.",
+          "GPS accuracy affects hazard locations.",
+        ],
       },
       design: {
-        process: "Designed a clean, light-themed publishing interface with neutral border lines. Focused on clean font rendering and clear buttons.",
-        wireframes: "Mocked grid systems separating: articles feed column, topic tags sidebar, and writer profile headers.",
-        iterations: "Swapped custom sidebars for responsive navigation tabs to secure readability on mobile devices.",
-        finalUI: "Clean typography with neutral cards, explicit post tables, and responsive forms."
+        process: "The stated direction is a map-first mobile experience with hazard markers and route exploration.",
+        artifacts: "No local screen exports are available in this portfolio workspace.",
       },
       development: {
-        architecture: "React SPA connecting to a Node/Express server, with data storage and authentication managed via Supabase.",
-        techDecisions: [
-          { title: "Markdown Input Parsing", desc: "Used rich text parsers to render formatted headings, lists, and code blocks instantly." },
-          { title: "Supabase Relations", desc: "Designed relational tables linking posts, authors, and tag collections." }
+        architecture: "The proposed flow includes sensor collection, timestamp alignment, orientation correction, filtering, classification and geographical association. The automatic detection model is not verified as implemented.",
+        decisions: [
+          { title: "Phone sensors and GPS", description: "Accelerometer, gyroscope and location readings are explored as inputs." },
+          { title: "Mobile map", description: "Flutter with flutter_map and OpenStreetMap is listed for geographical visualization." },
         ],
-        challenges: [
-          { title: "Editor Syncing Lag", desc: "Draft saves originally caused cursor jumps. Solved by updating local states before syncing changes with database." },
-          { title: "Asset Upload Latency", desc: "Optimized image uploads by compressing files before saving them to storage buckets." }
-        ]
       },
-      keyFeatures: [
-        { title: "Markdown Editor Panel", desc: "A text canvas supporting heading formats, quote blocks, and image placements." },
-        { title: "Dynamic Topic Filtration", desc: "Enables readers to filter articles using categorized tag pills." },
-        { title: "Author Profile Feeds", desc: "Personal profiles listing written articles, post statistics, and bio details." }
+      implementationEvidence: [
+        "A source repository is linked. Detection model implementation and performance are not verified in this portfolio workspace.",
+      ],
+      challenges: [
+        { title: "Noisy motion data", description: "Phone orientation, speed, braking and turning can affect sensor signals." },
+        { title: "Model validation", description: "Classification approaches need representative labelled data and evaluation." },
       ],
       learnings: [
-        "A pleasant reading experience relies on clean fonts, spacious borders, and removing visual distractions.",
-        "Type safety across databases and client interfaces helps maintain a stable codebase."
+        "Sensor collection alone is not enough for reliable anomaly detection.",
+        "Machine learning depends on representative, labelled data.",
       ],
       futureImprovements: [
-        "Add draft auto-save functions using local browser storage.",
-        "Integrate article reading time metrics for each post."
-      ]
-    }
+        "Confirm implemented app flows against the project source.",
+        "Collect and label representative sensor data before evaluating classifiers.",
+      ],
+    },
+    {
+      slug: "koode-ai",
+      title: "Koode AI",
+      subtitle: "Malayalam voice-first companion for older adults",
+      tagline: "A Malayalam voice-first companion for older adults.",
+      description: "A Hacktoberfest 2026 DEV Challenge entry built with React, FastAPI, Sarvam AI, and Gemma 2 via Ollama.",
+      domains: ["software", "design"],
+      primaryDomain: "design",
+      status: "prototype",
+      contribution: "Product design and development",
+      technologyStack: ["React", "FastAPI", "Sarvam AI", "Gemma 2", "Ollama"],
+      featured: true,
+      visibility: "public",
+      period: "Hacktoberfest 2026 DEV Challenge entry",
+      projectType: "hackathon",
+      problem: "The project explores a Malayalam voice-first companion for older adults.",
+      process: "Process details were not supplied.",
+      team: "Team details not supplied.",
+      whatIBuilt: "A voice-first companion using React, FastAPI, Sarvam AI (external API), and Gemma 2 via Ollama.",
+      outcome: "Hacktoberfest 2026 DEV Challenge entry; MIT licence. User testing and outcome details were not supplied.",
+      objectives: [
+        "Explore Malayalam speech interaction and speech-to-text capabilities.",
+        "Reduce typing and navigation effort through a conversational flow.",
+        "Consider larger text, touch areas, visual feedback and recovery when speech fails.",
+      ],
+      research: {
+        methodology:
+          "The concept identifies language accessibility, navigation complexity and typing as barriers. User interviews and usability testing are not documented.",
+        insights: [
+          "Voice should not be the only interaction mode.",
+          "Background noise and pronunciation can affect speech recognition.",
+          "Predictable navigation and error recovery help users stay oriented.",
+        ],
+      },
+      design: {
+        process: "The design concept prioritizes Malayalam voice interaction and a simpler conversational flow.",
+        artifacts: "Large touch targets and reduced navigation are design goals; local screen exports are unavailable.",
+        outcome: "The available content describes a concept and explored capabilities, not a tested voice product.",
+      },
+      development: {
+        architecture: "The project context includes Sarvam AI speech-to-text and generative AI. Implemented voice capabilities have not been verified.",
+        decisions: [
+          { title: "Regional language interaction", description: "Malayalam voice interaction is explored to reduce English and typing barriers." },
+          { title: "Accessible visual targets", description: "Larger typography and touch areas are design targets." },
+        ],
+      },
+      implementationEvidence: [
+        "The available project information describes a concept or prototype. Integrated speech capabilities and usability are not verified in this portfolio workspace.",
+      ],
+      challenges: [
+        { title: "Speech recognition conditions", description: "Noise and pronunciation can affect recognition and may require correction paths." },
+        { title: "Interaction recovery", description: "Users need visual feedback and a way to switch to touch input." },
+      ],
+      learnings: [
+        "Voice can reduce typing, but does not make a product accessible on its own.",
+        "Visual feedback and error recovery are essential parts of voice interaction.",
+      ],
+      futureImprovements: [
+        "Verify integrated speech capabilities against the project source.",
+        "Evaluate the design with older adults before making usability claims.",
+      ],
+    },
   ],
   experience: [
     {
-      id: 1,
+      id: "mulearn-district-lead",
       role: "District Lead",
       company: "MuLearn Foundation",
-      period: "Nov 2024 — Jan 2026",
+      period: "Nov 2024 – Jan 2026",
       description: [
-        "Represented μLearn at the district level, coordinating local initiatives and community outreach programs in Palakkad.",
-        "Engaged in Campus Management works.",
-        "Conducted 2 Campus Call (New Campuses On boarding to mulearn)."
+        "District Lead, Nov 2024 to Jan 2026.",
       ],
-      tags: ["Leadership", "Mentorship", "People Management", "Community Leadership", "Networking", "Communication"]
+      tags: ["Leadership", "Community", "Mentorship", "Communication"],
     },
     {
-      id: 2,
-      role: "Media Lead",
-      company: "Mulearn GECSKP",
-      period: "Jan 2025 — Feb 2026",
+      id: "mulearn-campus-management-intern",
+      role: "Campus Management Intern",
+      company: "MuLearn Foundation",
+      period: "Jan 2025 – Dec 2025",
       description: [
-        "Led end-to-end management of all social media profiles for µLearn GECSKP.",
-        "Oversaw content strategy, scheduling, and performance tracking across platforms.",
-        "Coordinated with team members to maintain consistent branding and voice, resulting in improved reach and community engagement."
+        "Supported campus management across 70+ campuses.",
       ],
-      tags: ["Communication", "Content Strategy", "Media Visibility"]
-    }
+      tags: ["Campus operations", "Coordination", "Community"],
+    },
+    {
+      id: "mulearn-media-lead",
+      role: "Media Lead",
+      company: "MuLearn GECSKP",
+      period: "Jan 2025 – Feb 2026",
+      description: [
+        "Media Lead, Jan 2025 to Feb 2026.",
+      ],
+      tags: ["Media", "Content planning", "Communication"],
+    },
   ],
   skills: [
-    {
-      title: "Programming Languages",
-      skills: ["C", "C++", "Python", "JavaScript", "TypeScript", "Java", "Dart", "C#"]
-    },
-    {
-      title: "Web Development",
-      skills: ["HTML5", "CSS3", "React", "Next.js", "Tailwind CSS", "Bootstrap", "Vite", "Django"]
-    },
-    {
-      title: "Databases & Cloud",
-      skills: ["Firebase", "Supabase", "Firestore", "SQL"]
-    },
-    {
-      title: "Embedded Systems (ECE)",
-      skills: ["Arduino IDE", "Microcontrollers (ATmega)", "IoT Prototyping", "Sensors Interfacing", "Hardware Prototyping"]
-    },
-    {
-      title: "Design & Tools",
-      skills: ["Figma", "Git", "GitHub", "VS Code", "Linux"]
-    }
+    { title: "Design - LSG Track and Koode AI", skills: ["Figma", "Product design"] },
+    { title: "Frontend - LSG Track and Koode AI", skills: ["React", "TypeScript"] },
+    { title: "Backend and APIs - Koode AI", skills: ["FastAPI", "Sarvam AI"] },
+    { title: "Embedded - Care-Ring and Adaptive Wiper", skills: ["ESP32", "Rain sensor", "BTS7960", "PWM"] },
+    { title: "Maps - LSG Track", skills: ["Leaflet", "OpenStreetMap", "Firebase"] },
   ],
   education: [
     {
       institution: "Government Engineering College, Palakkad",
-      degree: "B.Tech Electronics and Communication Engineering",
-      period: "2022 — 2027",
-      status: "Final Year"
-    }
+      degree: "B.Tech in Electronics and Communication Engineering",
+      period: "2023-2027",
+      cgpa: "6.52",
+      status: "Final year",
+    },
   ],
   certifications: [
-    {
-      title: "Responsive Web Design",
-      issuer: "FreecodeCamp",
-      date: "2025"
-    },
-    {
-      title: "Advancing Inclusion Program Scholarship - STEM Students",
-      issuer: "GHCI",
-      date: "2025"
-    },
-    {
-      title: "Fundamentals of UI UX",
-      issuer: "Coursera",
-      date: "2026"
-    },
-    {
-      title: "Vibe Coding for Beginners: From Zero to App",
-      issuer: "Google Cloud",
-      date: "2026"
-    },
-    {
-      title: "Opensource Contribution",
-      issuer: "Kerala Coders Cafe",
-      date: "2026"
-    }
+    { title: "IndiaFOSS 2026 Diversity Scholarship", issuer: "IndiaFOSS", date: "2026" },
+    { title: "STEM Student Scholar", issuer: "AnitaB.org" },
+    { title: "Certificate of Appreciation", issuer: "Kerala Coders Cafe" },
+    { title: "GHC India attendee", issuer: "Grace Hopper Celebration India" },
+  ],
+  designWorks: [],
+  designPortfolioUrl: "https://www.figma.com/design/G2iSQSGLrXMXa1vLC6vIZc/Works-by-Avanthika",
+  resumes: [
+    { label: "Resume", category: "general", format: "pdf", url: "/assets/Avanthika_KS_Resume_Nov_2026.pdf", updatedAt: "21 November 2026" },
   ],
   contact: {
     email: "avanthikaks1874@gmail.com",
     github: "https://github.com/AVA-NTHIKA14",
     linkedin: "https://linkedin.com/in/avanthika-ks",
-    location: "Kozhikode, Kerala, India"
+    location: "Kozhikode, Kerala, India",
   },
-  resumes: {
-    default: "/assets/Avanthika_Resume_General.pdf",
-    versions: [
-      {
-        label: "General",
-        url: "/assets/Avanthika_Resume_General.pdf"
-      },
-      {
-        label: "Graphic Design Associate",
-        url: "/assets/Avanthika_Resume_DesignRole.pdf"
-      },
-      {
-        label: "Software Developer",
-        url: "/assets/Avanthika_Resume_DevRole.pdf"
-      }
-    ]
-  },
-  designWorks: [
-    {
-      id: 1,
-      title: "FOSS Club GEC Palakkad Event Poster",
-      description: "Co-branded event poster for FOSS Club with IEDC, featuring duotone visual treatment.",
-      figmaUrl: "https://www.figma.com/design/G2iSQSGLrXMXa1vLC6vIZc/Works-by-Avanthika",
-      category: "Event Design"
-    },
-    {
-      id: 2,
-      title: "Nattil Ninnu — Kerala Organic Produce Brand",
-      description: "Brand identity and landing page concept for local organic produce, including logomark and colour system.",
-      figmaUrl: "https://www.figma.com/design/G2iSQSGLrXMXa1vLC6vIZc/Works-by-Avanthika",
-      category: "Brand & Web"
-    },
-    {
-      id: 3,
-      title: "V-FIESTA IEEE PIE Kerala Instagram Campaign",
-      description: "Multi-post visual system for IEEE campus event promotion across social media.",
-      figmaUrl: "https://www.figma.com/design/G2iSQSGLrXMXa1vLC6vIZc/Works-by-Avanthika",
-      category: "Social Media"
-    },
-    {
-      id: 4,
-      title: "ISTE Student Chapter RIT Kottayam Website",
-      description: "Multi-page website design with unified visual identity for student chapter organization.",
-      figmaUrl: "https://www.figma.com/design/G2iSQSGLrXMXa1vLC6vIZc/Works-by-Avanthika",
-      category: "Web Design"
-    }
-  ]
 };

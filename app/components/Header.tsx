@@ -111,14 +111,16 @@ export default function Header() {
       transition={{ duration: 0.5 }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-white/80 dark:bg-black/80 backdrop-blur-md border-b border-zinc-100 dark:border-zinc-900 shadow-sm"
-          : "bg-white/40 dark:bg-black/40 backdrop-blur-sm border-b border-transparent"
+          ? "bg-[#eaf4fc]/90 dark:bg-black/80 backdrop-blur-md border-b border-sky-100 dark:border-zinc-900 shadow-sm"
+          : "bg-[#eaf4fc]/55 dark:bg-black/40 backdrop-blur-sm border-b border-transparent"
       }`}
     >
       <div className="max-w-[1440px] mx-auto px-6 h-20 flex items-center justify-between">
-        {/* Logo (Circle with "aks" + "Avanthika K S") */}
-        <div
-          className="flex items-center gap-2.5 cursor-pointer group"
+        {/* Name wordmark */}
+        <button
+          type="button"
+          aria-label="Avanthika K S, back to home"
+          className="flex items-center gap-2.5 cursor-pointer group border-0 bg-transparent text-left"
           onClick={() => {
             if (pathname === "/") {
               window.scrollTo({ top: 0, behavior: "smooth" });
@@ -133,16 +135,17 @@ export default function Header() {
           <span className="font-extrabold text-sm sm:text-base text-black dark:text-white tracking-tight group-hover:opacity-85 transition-opacity">
             Avanthika K S
           </span>
-        </div>
+        </button>
 
         {/* Center Navigation Links */}
-        <nav className="hidden xl:flex gap-2 items-center">
+        <nav aria-label="Main navigation" className="hidden xl:flex gap-2 items-center">
           {NAV_LINKS.map((link) => {
             const isActive = activeSection === link.id;
             return (
               <button
                 key={link.id}
                 onClick={() => handleNav(link.id)}
+                aria-current={isActive ? "location" : undefined}
                 className={`font-semibold text-xs tracking-wider uppercase transition-all duration-200 cursor-pointer bg-transparent border-none px-4 py-2 rounded-full relative ${
                   isActive
                     ? "bg-zinc-100 dark:bg-zinc-900 text-black dark:text-white font-extrabold"
@@ -177,7 +180,9 @@ export default function Header() {
           {/* Mobile hamburger */}
           <button
             onClick={() => setMenuOpen((v) => !v)}
-            aria-label="Toggle menu"
+            aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-navigation"
             className="xl:hidden flex flex-col gap-1.5 justify-center items-center w-9 h-9 bg-transparent border-none cursor-pointer text-black dark:text-white"
           >
             {menuOpen ? <X size={20} /> : <Menu size={20} />}
@@ -189,11 +194,13 @@ export default function Header() {
       <AnimatePresence>
         {menuOpen && (
           <motion.nav
+            id="mobile-navigation"
+            aria-label="Mobile navigation"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.2 }}
-            className="absolute top-full left-0 right-0 bg-white/95 dark:bg-black/95 border-b border-zinc-100 dark:border-zinc-900 xl:hidden overflow-hidden backdrop-blur-md"
+            className="absolute top-full left-0 right-0 bg-[#eaf4fc]/95 dark:bg-black/95 border-b border-sky-100 dark:border-zinc-900 xl:hidden overflow-hidden backdrop-blur-md"
           >
             <div className="flex flex-col py-4 px-6 gap-1.5">
               {NAV_LINKS.map((link) => {
@@ -202,6 +209,7 @@ export default function Header() {
                   <button
                     key={link.id}
                     onClick={() => handleNav(link.id)}
+                    aria-current={isActive ? "location" : undefined}
                     className={`font-semibold text-left text-xs uppercase tracking-wider py-3 px-4 rounded-full transition-all ${
                       isActive
                         ? "bg-zinc-100 dark:bg-zinc-900 text-black dark:text-white font-extrabold"

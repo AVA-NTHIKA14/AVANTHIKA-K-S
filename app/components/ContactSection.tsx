@@ -23,8 +23,9 @@ export default function ContactSection() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    alert(`Thank you ${formData.name}! Message logged.`);
-    setFormData({ name: "", email: "", message: "" });
+    const subject = encodeURIComponent(`Portfolio message from ${formData.name}`);
+    const body = encodeURIComponent(`Name: ${formData.name}\nReply email: ${formData.email}\n\n${formData.message}`);
+    window.location.href = `mailto:${PORTFOLIO_DATA.contact.email}?subject=${subject}&body=${body}`;
   };
 
   return (
@@ -73,6 +74,7 @@ export default function ContactSection() {
               </div>
               <button
                 onClick={handleCopyEmail}
+                aria-label={copied ? "Email address copied" : "Copy email address"}
                 className="text-zinc-500 hover:text-black dark:text-zinc-400 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-900 p-2 rounded-full cursor-pointer bg-transparent border-none transition-colors"
                 title="Copy to Clipboard"
               >
@@ -173,7 +175,7 @@ export default function ContactSection() {
                   type="submit"
                   className="bg-black dark:bg-white hover:bg-zinc-900 dark:hover:bg-zinc-100 text-white dark:text-black font-bold text-xs tracking-wider uppercase px-6 py-3.5 rounded-full flex items-center gap-2 transition-colors cursor-pointer shadow-sm border-none"
                 >
-                  <Send size={12} /> Send message
+                  <Send size={12} /> Open email app
                 </button>
               </div>
             </form>

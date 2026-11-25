@@ -15,7 +15,7 @@ export default function Footer() {
 
         {/* Right Side: Quick Info */}
         <p className="text-xs text-zinc-400 dark:text-zinc-500 font-mono">
-          Kozhikode, Kerala, India · {PORTFOLIO_DATA.contact.email}
+          Kerala, India · {PORTFOLIO_DATA.contact.email}
         </p>
 
       </div>

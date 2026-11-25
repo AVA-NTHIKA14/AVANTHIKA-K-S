@@ -1,148 +1,61 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
+import Image from "next/image";
 import { ExternalLink } from "lucide-react";
 import { PORTFOLIO_DATA } from "../data/portfolioData";
+import type { DesignCategory } from "../types";
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.2,
-    },
-  },
-};
+const CATEGORIES: DesignCategory[] = ["UI/UX", "Branding", "Social Media", "Web Design", "Visual Design"];
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5 },
-  },
-};
+function isValidExternalUrl(value?: string) {
+  if (!value) return false;
+  try {
+    const url = new URL(value);
+    return url.protocol === "https:" || url.protocol === "http:";
+  } catch {
+    return false;
+  }
+}
+
+const DESIGN_WORKS = PORTFOLIO_DATA.designWorks.filter((work) => isValidExternalUrl(work.figmaUrl));
 
 export default function DesignWorkSection() {
+  const [category, setCategory] = useState<DesignCategory | "all">("all");
+  const works = DESIGN_WORKS;
+  const visibleWorks = category === "all" ? works : works.filter((work) => work.category === category);
+
   return (
-    <section id="design-work" className="py-20 px-6 bg-white dark:bg-black transition-colors duration-300">
-      <div className="max-w-[1440px] mx-auto">
-        {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
-          className="mb-16"
-        >
-          <h2 className="text-4xl font-black text-black dark:text-white tracking-tight mb-3">
-            Selected Design Work
-          </h2>
-          <p className="text-base text-zinc-600 dark:text-zinc-400 font-medium max-w-2xl">
-            Graphic design, brand identity, and UI design pieces showcasing visual thinking and design systems.
-          </p>
-        </motion.div>
+    <section id="design-work" className="border-t border-zinc-100 bg-white py-20 dark:border-zinc-900 dark:bg-black sm:py-24">
+      <div className="mx-auto max-w-[1200px] px-6 sm:px-10">
+        <div className="flex flex-wrap items-end justify-between gap-5">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[.2em] text-zinc-500">Product & visual design</p>
+            <h2 className="mt-3 text-3xl font-semibold tracking-tight text-zinc-950 dark:text-white sm:text-4xl">Design portfolio</h2>
+            <p className="mt-3 max-w-2xl text-sm leading-6 text-zinc-600 dark:text-zinc-400">See product design work in the linked Figma portfolio.</p>
+          </div>
+          {isValidExternalUrl(PORTFOLIO_DATA.designPortfolioUrl) && <a href={PORTFOLIO_DATA.designPortfolioUrl} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-2 rounded-full border border-zinc-300 px-4 py-2 text-sm font-medium text-zinc-800 hover:border-zinc-500 dark:border-zinc-700 dark:text-zinc-200 dark:hover:border-zinc-500">Browse Figma portfolio <ExternalLink size={14} aria-hidden="true" /></a>}
+        </div>
 
-        {/* Design Work Grid */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8"
-        >
-          {PORTFOLIO_DATA.designWorks.map((work) => (
-            <motion.a
-              key={work.id}
-              href={work.figmaUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              variants={itemVariants}
-              whileHover={{ y: -4 }}
-              className="group relative overflow-hidden rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 hover:border-zinc-300 dark:hover:border-zinc-700 transition-all duration-300 cursor-pointer"
-            >
-              {/* A compact visual cue keeps the gallery scannable without inventing project screenshots. */}
-              <div className="relative h-40 overflow-hidden border-b border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900">
-                <div className="absolute inset-5 rounded-md border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 p-4 shadow-sm">
-                  <div className="flex items-center justify-between">
-                    <span className="h-2 w-16 rounded-full bg-black dark:bg-white" />
-                    <span className="h-2 w-8 rounded-full bg-zinc-300 dark:bg-zinc-700" />
-                  </div>
-                  <div className="mt-6 grid grid-cols-3 gap-2">
-                    <span className="col-span-2 h-12 rounded-sm bg-zinc-900 dark:bg-zinc-100" />
-                    <span className="h-12 rounded-sm bg-yellow-300" />
-                  </div>
-                  <div className="mt-3 flex gap-2">
-                    <span className="h-2 w-20 rounded-full bg-zinc-300 dark:bg-zinc-700" />
-                    <span className="h-2 w-12 rounded-full bg-zinc-200 dark:bg-zinc-800" />
-                  </div>
-                </div>
-                <span className="absolute bottom-3 right-4 text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400">
-                  {work.category}
-                </span>
+        {works.length > 0 && <>
+          <div className="mt-7 flex flex-wrap gap-2" aria-label="Filter design work by category">
+            <button type="button" aria-pressed={category === "all"} onClick={() => setCategory("all")} className={`min-h-10 rounded-full border px-4 py-2 text-sm ${category === "all" ? "border-zinc-900 bg-zinc-900 text-white dark:border-white dark:bg-white dark:text-black" : "border-zinc-300 dark:border-zinc-700"}`}>All design work</button>
+            {CATEGORIES.map((item) => <button key={item} type="button" aria-pressed={category === item} onClick={() => setCategory(item)} className={`min-h-10 rounded-full border px-4 py-2 text-sm ${category === item ? "border-zinc-900 bg-zinc-900 text-white dark:border-white dark:bg-white dark:text-black" : "border-zinc-300 dark:border-zinc-700"}`}>{item}</button>)}
+          </div>
+          <div className="mt-6 grid gap-4 md:grid-cols-2">
+            {visibleWorks.map((work) => <article key={work.id} className="overflow-hidden rounded-2xl border border-zinc-200 dark:border-zinc-800">
+              {work.previewImage && <Image src={work.previewImage} alt={`${work.title} preview`} width={1000} height={650} className="aspect-[16/9] w-full object-cover" />}
+              <div className="p-5 sm:p-6">
+                <p className="text-xs font-semibold uppercase tracking-wide text-zinc-500">{work.category}</p>
+                <h3 className="mt-2 text-xl font-semibold text-zinc-950 dark:text-white">{work.title}</h3>
+                <p className="mt-2 text-sm leading-6 text-zinc-600 dark:text-zinc-400">{work.description}</p>
+                {work.contribution && <p className="mt-3 text-sm"><span className="font-medium">Contribution:</span> {work.contribution}</p>}
+                {work.figmaUrl && <a href={work.figmaUrl} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex min-h-10 items-center gap-2 text-sm font-medium underline underline-offset-4">Open design <ExternalLink size={14} aria-hidden="true" /></a>}
               </div>
-
-              {/* Card Content */}
-              <div className="p-8 h-full flex flex-col justify-between">
-                {/* Category Tag */}
-                <div className="inline-flex w-fit mb-4">
-                  <span className="text-xs font-bold uppercase tracking-widest text-zinc-500 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-900 px-3 py-1.5 rounded-full">
-                    {work.category}
-                  </span>
-                </div>
-
-                {/* Title */}
-                <div className="mb-4 flex-1">
-                  <h3 className="text-xl font-black text-black dark:text-white tracking-tight mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                    {work.title}
-                  </h3>
-                  <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                    {work.description}
-                  </p>
-                </div>
-
-                {/* Footer with Link */}
-                <div className="flex items-center justify-between pt-4 border-t border-zinc-200 dark:border-zinc-800 group-hover:border-zinc-300 dark:group-hover:border-zinc-700 transition-colors">
-                  <span className="text-xs font-bold uppercase tracking-widest text-zinc-500 dark:text-zinc-400 group-hover:text-black dark:group-hover:text-white transition-colors">
-                    View in Figma
-                  </span>
-                  <ExternalLink
-                    size={16}
-                    className="text-zinc-400 dark:text-zinc-600 group-hover:text-black dark:group-hover:text-white group-hover:translate-x-1 group-hover:-translate-y-1 transition-all"
-                  />
-                </div>
-              </div>
-
-              {/* Hover Background Effect */}
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-            </motion.a>
-          ))}
-        </motion.div>
-
-        {/* Figma Portfolio Link */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          viewport={{ once: true }}
-          className="mt-16 text-center"
-        >
-          <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-4">
-            Explore more work in my Figma portfolio
-          </p>
-          <motion.a
-            href="https://www.figma.com/design/G2iSQSGLrXMXa1vLC6vIZc/Works-by-Avanthika"
-            target="_blank"
-            rel="noopener noreferrer"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            className="inline-flex items-center gap-2 bg-black dark:bg-white hover:bg-zinc-900 dark:hover:bg-zinc-100 text-white dark:text-black font-bold text-xs tracking-wider uppercase px-8 py-3 rounded-full transition-colors cursor-pointer"
-          >
-            Open Figma Portfolio
-            <ExternalLink size={14} />
-          </motion.a>
-        </motion.div>
+            </article>)}
+          </div>
+          {visibleWorks.length === 0 && <p className="mt-6 text-sm text-zinc-600 dark:text-zinc-400">No design work in this category yet.</p>}
+        </>}
       </div>
     </section>
   );
